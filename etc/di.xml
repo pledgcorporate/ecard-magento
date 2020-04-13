@@ -1,0 +1,260 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Payment Method Facade configuration -->
+    <virtualType name="PledgPaymentGatewayFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">Ginidev\PledgPaymentGateway\Gateway\Config\Config::CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Ginidev\PledgPaymentGateway\Block\Info</argument>
+            <argument name="valueHandlerPool" xsi:type="object">PledgPaymentGatewayValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">PledgPaymentGatewayCommandPool</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Pledg1PaymentGatewayFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">Ginidev\PledgPaymentGateway\Gateway\Config\Config1::CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Ginidev\PledgPaymentGateway\Block\Info</argument>
+            <argument name="valueHandlerPool" xsi:type="object">PledgPaymentGatewayValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">PledgPaymentGatewayCommandPool</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Pledg2PaymentGatewayFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">Ginidev\PledgPaymentGateway\Gateway\Config\Config2::CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Ginidev\PledgPaymentGateway\Block\Info</argument>
+            <argument name="valueHandlerPool" xsi:type="object">PledgPaymentGatewayValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">PledgPaymentGatewayCommandPool</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Pledg3PaymentGatewayFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">Ginidev\PledgPaymentGateway\Gateway\Config\Config3::CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Ginidev\PledgPaymentGateway\Block\Info</argument>
+            <argument name="valueHandlerPool" xsi:type="object">PledgPaymentGatewayValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">PledgPaymentGatewayCommandPool</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Pledg4PaymentGatewayFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">Ginidev\PledgPaymentGateway\Gateway\Config\Config4::CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Ginidev\PledgPaymentGateway\Block\Info</argument>
+            <argument name="valueHandlerPool" xsi:type="object">PledgPaymentGatewayValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">PledgPaymentGatewayCommandPool</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Pledg5PaymentGatewayFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">Ginidev\PledgPaymentGateway\Gateway\Config\Config5::CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Ginidev\PledgPaymentGateway\Block\Info</argument>
+            <argument name="valueHandlerPool" xsi:type="object">PledgPaymentGatewayValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">PledgPaymentGatewayCommandPool</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Pledg6PaymentGatewayFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">Ginidev\PledgPaymentGateway\Gateway\Config\Config6::CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Ginidev\PledgPaymentGateway\Block\Info</argument>
+            <argument name="valueHandlerPool" xsi:type="object">PledgPaymentGatewayValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">PledgPaymentGatewayCommandPool</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Pledg7PaymentGatewayFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">Ginidev\PledgPaymentGateway\Gateway\Config\Config7::CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Ginidev\PledgPaymentGateway\Block\Info</argument>
+            <argument name="valueHandlerPool" xsi:type="object">PledgPaymentGatewayValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">PledgPaymentGatewayCommandPool</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Pledg8PaymentGatewayFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">Ginidev\PledgPaymentGateway\Gateway\Config\Config8::CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Ginidev\PledgPaymentGateway\Block\Info</argument>
+            <argument name="valueHandlerPool" xsi:type="object">PledgPaymentGatewayValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">PledgPaymentGatewayCommandPool</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Pledg9PaymentGatewayFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">Ginidev\PledgPaymentGateway\Gateway\Config\Config9::CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Ginidev\PledgPaymentGateway\Block\Info</argument>
+            <argument name="valueHandlerPool" xsi:type="object">PledgPaymentGatewayValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">PledgPaymentGatewayCommandPool</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Pledg10PaymentGatewayFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">Ginidev\PledgPaymentGateway\Gateway\Config\Config10::CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Ginidev\PledgPaymentGateway\Block\Info</argument>
+            <argument name="valueHandlerPool" xsi:type="object">PledgPaymentGatewayValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">PledgPaymentGatewayCommandPool</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Configuration reader -->
+    <type name="Ginidev\PledgPaymentGateway\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Ginidev\PledgPaymentGateway\Gateway\Config\Config::CODE</argument>
+        </arguments>
+    </type>
+
+    <!-- Configuration reader -->
+    <type name="Ginidev\PledgPaymentGateway\Gateway\Config\Config1">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Ginidev\PledgPaymentGateway\Gateway\Config\Config1::CODE</argument>
+        </arguments>
+    </type>
+
+    <!-- Configuration reader -->
+    <type name="Ginidev\PledgPaymentGateway\Gateway\Config\Config2">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Ginidev\PledgPaymentGateway\Gateway\Config\Config2::CODE</argument>
+        </arguments>
+    </type>
+    <!-- Configuration reader -->
+    <type name="Ginidev\PledgPaymentGateway\Gateway\Config\Config3">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Ginidev\PledgPaymentGateway\Gateway\Config\Config3::CODE</argument>
+        </arguments>
+    </type>
+    <!-- Configuration reader -->
+    <type name="Ginidev\PledgPaymentGateway\Gateway\Config\Config4">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Ginidev\PledgPaymentGateway\Gateway\Config\Config4::CODE</argument>
+        </arguments>
+    </type>
+    <!-- Configuration reader -->
+    <type name="Ginidev\PledgPaymentGateway\Gateway\Config\Config5">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Ginidev\PledgPaymentGateway\Gateway\Config\Config5::CODE</argument>
+        </arguments>
+    </type>
+    <!-- Configuration reader -->
+    <type name="Ginidev\PledgPaymentGateway\Gateway\Config\Config6">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Ginidev\PledgPaymentGateway\Gateway\Config\Config6::CODE</argument>
+        </arguments>
+    </type>
+    <!-- Configuration reader -->
+    <type name="Ginidev\PledgPaymentGateway\Gateway\Config\Config7">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Ginidev\PledgPaymentGateway\Gateway\Config\Config7::CODE</argument>
+        </arguments>
+    </type>
+    <!-- Configuration reader -->
+    <type name="Ginidev\PledgPaymentGateway\Gateway\Config\Config8">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Ginidev\PledgPaymentGateway\Gateway\Config\Config8::CODE</argument>
+        </arguments>
+    </type>
+    <!-- Configuration reader -->
+    <type name="Ginidev\PledgPaymentGateway\Gateway\Config\Config9">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Ginidev\PledgPaymentGateway\Gateway\Config\Config9::CODE</argument>
+        </arguments>
+    </type>
+    <!-- Configuration reader -->
+    <type name="Ginidev\PledgPaymentGateway\Gateway\Config\Config3">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Ginidev\PledgPaymentGateway\Gateway\Config\Config3::CODE</argument>
+        </arguments>
+    </type>
+
+    <!-- Commands infrastructure -->
+    <virtualType name="PledgPaymentGatewayCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="initialize" xsi:type="string">PledgPaymentGatewayInitializeCommand</item>
+                <item name="refund" xsi:type="string">PledgPaymentGatewayRefundCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Initialize command -->
+    <virtualType name="PledgPaymentGatewayInitializeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">PledgPaymentGatewayInitializationRequest</argument>
+            <argument name="transferFactory" xsi:type="object">Ginidev\PledgPaymentGateway\Gateway\Http\DummyTransferFactory</argument> <!-- [Payment/Model/Method/Adapter][executeCommand]ERROR!Cannot instantiate interface Magento\Payment\Gateway\Http\TransferFactoryInterface if empty -->
+            <argument name="client" xsi:type="object">Ginidev\PledgPaymentGateway\Gateway\Http\Client\DummyClient</argument> <!-- [Payment/Model/Method/Adapter][executeCommand]ERROR getting command!Cannot instantiate interface Magento\Payment\Gateway\Http\ClientInterface if empty-->
+        </arguments>
+    </virtualType>
+
+    <!-- Refund command -->
+    <virtualType name="PledgPaymentGatewayRefundCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">PledgPaymentGatewayRefundRequest</argument>
+            <argument name="transferFactory" xsi:type="object">Ginidev\PledgPaymentGateway\Gateway\Http\DummyTransferFactory</argument> <!-- [Payment/Model/Method/Adapter][executeCommand]ERROR!Cannot instantiate interface Magento\Payment\Gateway\Http\TransferFactoryInterface if empty -->
+            <argument name="handler" xsi:type="object">Ginidev\PledgPaymentGateway\Model\PledgPayment</argument>
+            <argument name="client" xsi:type="object">Ginidev\PledgPaymentGateway\Gateway\Http\Client\RefundClient</argument> <!-- [Payment/Model/Method/Adapter][executeCommand]ERROR getting command!Cannot instantiate interface Magento\Payment\Gateway\Http\ClientInterface if empty-->
+        </arguments>
+    </virtualType>
+
+    <!-- Initialization Request -->
+    <virtualType name="PledgPaymentGatewayInitializationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="transaction" xsi:type="string">Ginidev\PledgPaymentGateway\Gateway\Request\InitializationRequest</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Refund Request -->
+    <virtualType name="PledgPaymentGatewayRefundRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="transaction" xsi:type="string">Ginidev\PledgPaymentGateway\Gateway\Request\RefundRequest</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Ginidev\PledgPaymentGateway\Gateway\Request\InitializationRequest">
+        <arguments>
+            <argument name="config" xsi:type="object">Ginidev\PledgPaymentGateway\Gateway\Config\Config</argument>
+        </arguments>
+    </type>
+
+    <!-- Value handlers infrastructure -->
+    <virtualType name="PledgPaymentGatewayValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">PledgPaymentGatewayConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="PledgPaymentGatewayConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">Ginidev\PledgPaymentGateway\Gateway\Config\Config</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Ginidev\PledgPaymentGateway\Block\Info">
+        <arguments>
+            <argument name="config" xsi:type="object">Ginidev\PledgPaymentGateway\Gateway\Config\Config</argument>
+        </arguments>
+    </type>
+
+    <type name="\Magento\Sales\Model\Order\Email\Sender\OrderSender">
+        <plugin name="Pledg-OrderSender-Plugin" type="Ginidev\PledgPaymentGateway\Plugin\OrderSenderPlugin" />
+    </type>
+
+    <type name="Magento\Payment\Model\MethodList">
+        <plugin sortOrder="5" name="pledgChangeSortOrder" type="Ginidev\PledgPaymentGateway\Plugin\Model\Method\MethodAvailable" disabled="false" />
+    </type>
+
+</config>
