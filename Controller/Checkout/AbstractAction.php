@@ -1,20 +1,28 @@
 <?php
 
-namespace Ginidev\PledgPaymentGateway\Controller\Checkout;
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ *
+ * @author Gildas Rossignon <gildas@ginidev.com>
+ * @package Pledg_PledgPaymentGateway
+ */
+
+namespace Pledg\PledgPaymentGateway\Controller\Checkout;
 
 use Magento\Framework\App\Action\Action;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Sales\Model\OrderFactory;
-use Ginidev\PledgPaymentGateway\Helper\Crypto;
-use Ginidev\PledgPaymentGateway\Helper\Data;
-use Ginidev\PledgPaymentGateway\Helper\Checkout;
-use Ginidev\PledgPaymentGateway\Gateway\Config\Config;
+use Pledg\PledgPaymentGateway\Helper\Crypto;
+use Pledg\PledgPaymentGateway\Helper\Data;
+use Pledg\PledgPaymentGateway\Helper\Checkout;
+use Pledg\PledgPaymentGateway\Gateway\Config\Config;
 use Psr\Log\LoggerInterface;
 
 /**
- * @package Ginidev\PledgPaymentGateway\Controller\Checkout
+ * @package Pledg\PledgPaymentGateway\Controller\Checkout
  */
 abstract class AbstractAction extends Action {
 

@@ -1,8 +1,16 @@
 <?php
 
-namespace Ginidev\PledgPaymentGateway\Model;
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ *
+ * @author Gildas Rossignon <gildas@ginidev.com>
+ * @package Pledg_PledgPaymentGateway
+ */
 
-use Ginidev\PledgPaymentGateway\Helper\Crypto;
+namespace Pledg\PledgPaymentGateway\Model;
+
+use Pledg\PledgPaymentGateway\Helper\Crypto;
 use Magento\Payment\Gateway\Response\HandlerInterface;
 use Magento\Framework\Exception\LocalizedException;
 

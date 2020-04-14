@@ -2,12 +2,15 @@
 /**
  * Copyright © 2016 Magento. All rights reserved.
  * See COPYING.txt for license details.
+ *
+ * @author Gildas Rossignon <gildas@ginidev.com>
+ * @package Pledg_PledgPaymentGateway
  */
 
 /**
  * Image config field renderer
  */
-namespace Ginidev\PledgPaymentGateway\Block\System\Config\Form\Field;
+namespace Pledg\PledgPaymentGateway\Block\System\Config\Form\Field;
 
 /**
  * Class Image Field
@@ -27,7 +30,7 @@ class Image extends \Magento\Config\Block\System\Config\Form\Field
         $html = '';
 
         if (!(string)$element->getValue()) {
-            $defaultImage = $this->getViewFileUrl('Ginidev_PledgPaymentGateway::images/pledg_logo.png');
+            $defaultImage = $this->getViewFileUrl('Pledg_PledgPaymentGateway::images/pledg_logo.png');
 
             $html .= '<img src="' . $defaultImage . '" alt="Pledg logo" height="50" width="85" class="small-image-preview v-middle" />';
             $html .= '<p class="note"><span>Upload a new image if you wish to replace this logo.</span></p>';

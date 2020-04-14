@@ -1,12 +1,21 @@
 <?php
+
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ *
+ * @author Gildas Rossignon <gildas@ginidev.com>
+ * @package Pledg_PledgPaymentGateway
+ */
+
 /**
  * MethodAvailable class
  *
  * @author  Gildas Rossignon <gildas@ginidev.com>
- * @package Ginidev_PledgPaymentGateway
+ * @package Pledg_PledgPaymentGateway
  */
 
-namespace Ginidev\PledgPaymentGateway\Plugin\Model\Method;
+namespace Pledg\PledgPaymentGateway\Plugin\Model\Method;
 
 class MethodAvailable
 {

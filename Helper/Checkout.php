@@ -2,9 +2,12 @@
 /**
  * Copyright © 2016 Magento. All rights reserved.
  * See COPYING.txt for license details.
+ *
+ * @author Gildas Rossignon <gildas@ginidev.com>
+ * @package Pledg_PledgPaymentGateway
  */
 
-namespace Ginidev\PledgPaymentGateway\Helper;
+namespace Pledg\PledgPaymentGateway\Helper;
 
 use Magento\Sales\Model\Order;
 use Magento\Checkout\Model\Session;
@@ -13,7 +16,7 @@ use Magento\Checkout\Model\Session;
  * Checkout workflow helper
  *
  * Class Checkout
- * @package Ginidev\PledgPaymentGateway\Helper
+ * @package Pledg\PledgPaymentGateway\Helper
  */
 class Checkout
 {

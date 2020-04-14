@@ -28,7 +28,7 @@
                 <field id="gateway_logo" translate="label comment" type="image" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Logo</label>
                     <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
-                    <frontend_model>Ginidev\PledgPaymentGateway\Block\System\Config\Form\Field\Image</frontend_model>
+                    <frontend_model>Pledg\PledgPaymentGateway\Block\System\Config\Form\Field\Image</frontend_model>
                     <upload_dir config="system/filesystem/media" scope_info="1">sales/store/logo</upload_dir>
                     <base_url type="media" scope_info="1">sales/store/logo</base_url>
                 </field>
@@ -37,7 +37,7 @@
                 </field>
                 <!--<field id="specificcountry" translate="label" type="multiselect" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Payment from Specific Countries</label>
-                    <source_model>Ginidev\PledgPaymentGateway\Model\Config\Source\RestrictedCountry</source_model>
+                    <source_model>Pledg\PledgPaymentGateway\Model\Config\Source\RestrictedCountry</source_model>
                 </field>-->
                 <!--<field id="ginidev_approved_order_status" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Status for Pledg Approved Orders</label>
@@ -73,7 +73,7 @@
                 <field id="gateway_logo" translate="label comment" type="image" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Logo</label>
                     <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
-                    <frontend_model>Ginidev\PledgPaymentGateway\Block\System\Config\Form\Field\Image</frontend_model>
+                    <frontend_model>Pledg\PledgPaymentGateway\Block\System\Config\Form\Field\Image</frontend_model>
                     <upload_dir config="system/filesystem/media" scope_info="1">sales/store/logo</upload_dir>
                     <base_url type="media" scope_info="1">sales/store/logo</base_url>
                 </field>
@@ -100,7 +100,7 @@
                 <field id="gateway_logo" translate="label comment" type="image" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Logo</label>
                     <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
-                    <frontend_model>Ginidev\PledgPaymentGateway\Block\System\Config\Form\Field\Image</frontend_model>
+                    <frontend_model>Pledg\PledgPaymentGateway\Block\System\Config\Form\Field\Image</frontend_model>
                     <upload_dir config="system/filesystem/media" scope_info="1">sales/store/logo</upload_dir>
                     <base_url type="media" scope_info="1">sales/store/logo</base_url>
                 </field>
@@ -127,7 +127,7 @@
                 <field id="gateway_logo" translate="label comment" type="image" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Logo</label>
                     <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
-                    <frontend_model>Ginidev\PledgPaymentGateway\Block\System\Config\Form\Field\Image</frontend_model>
+                    <frontend_model>Pledg\PledgPaymentGateway\Block\System\Config\Form\Field\Image</frontend_model>
                     <upload_dir config="system/filesystem/media" scope_info="1">sales/store/logo</upload_dir>
                     <base_url type="media" scope_info="1">sales/store/logo</base_url>
                 </field>
@@ -154,7 +154,7 @@
                 <field id="gateway_logo" translate="label comment" type="image" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Logo</label>
                     <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
-                    <frontend_model>Ginidev\PledgPaymentGateway\Block\System\Config\Form\Field\Image</frontend_model>
+                    <frontend_model>Pledg\PledgPaymentGateway\Block\System\Config\Form\Field\Image</frontend_model>
                     <upload_dir config="system/filesystem/media" scope_info="1">sales/store/logo</upload_dir>
                     <base_url type="media" scope_info="1">sales/store/logo</base_url>
                 </field>
@@ -181,7 +181,7 @@
                 <field id="gateway_logo" translate="label comment" type="image" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Logo</label>
                     <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
-                    <frontend_model>Ginidev\PledgPaymentGateway\Block\System\Config\Form\Field\Image</frontend_model>
+                    <frontend_model>Pledg\PledgPaymentGateway\Block\System\Config\Form\Field\Image</frontend_model>
                     <upload_dir config="system/filesystem/media" scope_info="1">sales/store/logo</upload_dir>
                     <base_url type="media" scope_info="1">sales/store/logo</base_url>
                 </field>
@@ -208,7 +208,7 @@
                 <field id="gateway_logo" translate="label comment" type="image" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Logo</label>
                     <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
-                    <frontend_model>Ginidev\PledgPaymentGateway\Block\System\Config\Form\Field\Image</frontend_model>
+                    <frontend_model>Pledg\PledgPaymentGateway\Block\System\Config\Form\Field\Image</frontend_model>
                     <upload_dir config="system/filesystem/media" scope_info="1">sales/store/logo</upload_dir>
                     <base_url type="media" scope_info="1">sales/store/logo</base_url>
                 </field>
@@ -235,7 +235,7 @@
                 <field id="gateway_logo" translate="label comment" type="image" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Logo</label>
                     <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
-                    <frontend_model>Ginidev\PledgPaymentGateway\Block\System\Config\Form\Field\Image</frontend_model>
+                    <frontend_model>Pledg\PledgPaymentGateway\Block\System\Config\Form\Field\Image</frontend_model>
                     <upload_dir config="system/filesystem/media" scope_info="1">sales/store/logo</upload_dir>
                     <base_url type="media" scope_info="1">sales/store/logo</base_url>
                 </field>
@@ -262,7 +262,7 @@
                 <field id="gateway_logo" translate="label comment" type="image" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Logo</label>
                     <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
-                    <frontend_model>Ginidev\PledgPaymentGateway\Block\System\Config\Form\Field\Image</frontend_model>
+                    <frontend_model>Pledg\PledgPaymentGateway\Block\System\Config\Form\Field\Image</frontend_model>
                     <upload_dir config="system/filesystem/media" scope_info="1">sales/store/logo</upload_dir>
                     <base_url type="media" scope_info="1">sales/store/logo</base_url>
                 </field>
@@ -289,7 +289,7 @@
                 <field id="gateway_logo" translate="label comment" type="image" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Logo</label>
                     <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
-                    <frontend_model>Ginidev\PledgPaymentGateway\Block\System\Config\Form\Field\Image</frontend_model>
+                    <frontend_model>Pledg\PledgPaymentGateway\Block\System\Config\Form\Field\Image</frontend_model>
                     <upload_dir config="system/filesystem/media" scope_info="1">sales/store/logo</upload_dir>
                     <base_url type="media" scope_info="1">sales/store/logo</base_url>
                 </field>

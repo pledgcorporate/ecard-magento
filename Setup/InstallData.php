@@ -1,10 +1,15 @@
 <?php
+
 /**
- * Copyright © Magento, Inc. All rights reserved.
+ * Copyright © 2016 Magento. All rights reserved.
  * See COPYING.txt for license details.
+ *
+ * @author Gildas Rossignon <gildas@ginidev.com>
+ * @package Pledg_PledgPaymentGateway
  */
 
-namespace Ginidev\PledgPaymentGateway\Setup;
+
+namespace Pledg\PledgPaymentGateway\Setup;
 
 use Magento\Framework\Setup\InstallDataInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
@@ -27,7 +32,7 @@ class InstallData implements InstallDataInterface
         // add default Pledg Status "Pledg Processed" for STATE_PROCESSING state
         $statusTable = 'sales_order_status';
         $statusStateTable = 'sales_order_status_state';
-        $pledgProcessingStatus = 'ginidev_processed';
+        $pledgProcessingStatus = 'pledg_processed';
         $processingState  = \Magento\Sales\Model\Order::STATE_PROCESSING;
 
         //Insert 'ginidev_processed' status

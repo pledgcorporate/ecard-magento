@@ -1,5 +1,5 @@
 {
-    "name": "ginidev/module-pledg-payment-gateway",
+    "name": "pledg/module-pledg-payment-gateway",
     "description": "Pledg Payment Gateway",
     "require": {
         "php": "~7.1.3||~7.2.0||~7.3.0"
@@ -13,7 +13,7 @@
     "autoload": {
         "files": [ "registration.php" ],
         "psr-4": {
-            "Ginidev\\PledgPaymentGateway\\": ""
+            "Pledg\\PledgPaymentGateway\\": ""
         }
     }
 }

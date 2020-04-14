@@ -1,6 +1,8 @@
 /**
  * Copyright © 2016 Magento. All rights reserved.
  * See COPYING.txt for license details.
+ * @author Gildas Rossignon <gildas@ginidev.com>
+ * @package Pledg_PledgPaymentGateway
  */
 /*browser:true*/
 /*global define*/
@@ -26,7 +28,7 @@ define(
             redirectAfterPlaceOrder: false,
 
             defaults: {
-                template: 'Ginidev_PledgPaymentGateway/payment/form'
+                template: 'Pledg_PledgPaymentGateway/payment/form'
             },
 
             initialize: function() {

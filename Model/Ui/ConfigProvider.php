@@ -2,26 +2,29 @@
 /**
  * Copyright © 2016 Magento. All rights reserved.
  * See COPYING.txt for license details.
+ *
+ * @author Gildas Rossignon <gildas@ginidev.com>
+ * @package Pledg_PledgPaymentGateway
  */
-namespace Ginidev\PledgPaymentGateway\Model\Ui;
+namespace Pledg\PledgPaymentGateway\Model\Ui;
 
-use Ginidev\PledgPaymentGateway\Gateway\Config\Config1;
-use Ginidev\PledgPaymentGateway\Gateway\Config\Config2;
-use Ginidev\PledgPaymentGateway\Gateway\Config\Config3;
-use Ginidev\PledgPaymentGateway\Gateway\Config\Config4;
-use Ginidev\PledgPaymentGateway\Gateway\Config\Config5;
-use Ginidev\PledgPaymentGateway\Gateway\Config\Config6;
-use Ginidev\PledgPaymentGateway\Gateway\Config\Config7;
-use Ginidev\PledgPaymentGateway\Gateway\Config\Config8;
-use Ginidev\PledgPaymentGateway\Gateway\Config\Config9;
-use Ginidev\PledgPaymentGateway\Gateway\Config\Config10;
+use Pledg\PledgPaymentGateway\Gateway\Config\Config1;
+use Pledg\PledgPaymentGateway\Gateway\Config\Config2;
+use Pledg\PledgPaymentGateway\Gateway\Config\Config3;
+use Pledg\PledgPaymentGateway\Gateway\Config\Config4;
+use Pledg\PledgPaymentGateway\Gateway\Config\Config5;
+use Pledg\PledgPaymentGateway\Gateway\Config\Config6;
+use Pledg\PledgPaymentGateway\Gateway\Config\Config7;
+use Pledg\PledgPaymentGateway\Gateway\Config\Config8;
+use Pledg\PledgPaymentGateway\Gateway\Config\Config9;
+use Pledg\PledgPaymentGateway\Gateway\Config\Config10;
 use Magento\Checkout\Model\ConfigProviderInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Customer\Model\Session;
 use Magento\Backend\Model\Session\Quote;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\View\Asset\Repository;
-use Ginidev\PledgPaymentGateway\Gateway\Config\Config;
+use Pledg\PledgPaymentGateway\Gateway\Config\Config;
 
 /**
  * Class ConfigProvider
@@ -63,7 +66,7 @@ final class ConfigProvider implements ConfigProviderInterface
         $params = array();
         $params = array_merge(['_secure' => $request->isSecure()], $params);
 
-        $logoDef = $this->_assetRepo->getUrlWithParams('Ginidev_PledgPaymentGateway::images/pledg_logo.png', $params);
+        $logoDef = $this->_assetRepo->getUrlWithParams('Pledg_PledgPaymentGateway::images/pledg_logo.png', $params);
 
 
         $logoFile = $this->_gatewayConfig->getLogo();

@@ -1,9 +1,17 @@
 <?php
 
-namespace Ginidev\PledgPaymentGateway\Helper;
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ *
+ * @author Gildas Rossignon <gildas@ginidev.com>
+ * @package Pledg_PledgPaymentGateway
+ */
+
+namespace Pledg\PledgPaymentGateway\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
-use Ginidev\PledgPaymentGateway\Gateway\Config\Config;
+use Pledg\PledgPaymentGateway\Gateway\Config\Config;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\App\Helper\Context;
@@ -12,14 +20,14 @@ use Magento\Payment\Helper\Data as PaymentData;
 use Magento\Framework\Exception\NoSuchEntityException;
 
 /**
- * Class Ginidev_Pledgments_Helper_Data
+ * Class Pledg_Pledgments_Helper_Data
  *
  * Provides helper methods for retrieving data for the pledg plugin
  */
 class Data extends AbstractHelper {
 
     /**
-     * @var \Ginidev\PledgPaymentGateway\Gateway\Config\Config
+     * @var \Pledg\PledgPaymentGateway\Gateway\Config\Config
      */
     protected $_gatewayConfig;
     /**
@@ -44,7 +52,7 @@ class Data extends AbstractHelper {
     protected $_localeResolver;
 
     /**
-     * @param \Ginidev\PledgPaymentGateway\Gateway\Config\Config $gatewayConfig
+     * @param \Pledg\PledgPaymentGateway\Gateway\Config\Config $gatewayConfig
      * @param \Magento\Framework\ObjectManagerInterface $objectManager
      * @param \Magento\Framework\App\Helper\Context $context
      * @param \Magento\Payment\Helper\Data $paymentData
@@ -73,7 +81,7 @@ class Data extends AbstractHelper {
     /**
      * Creates an Instance of the Helper
      * @param  \Magento\Framework\ObjectManagerInterface $objectManager
-     * @return \Ginidev\PledgPaymentGateway\Helper\Data
+     * @return \Pledg\PledgPaymentGateway\Helper\Data
      */
     public static function getInstance($objectManager)
     {

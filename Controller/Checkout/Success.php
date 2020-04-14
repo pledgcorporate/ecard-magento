@@ -1,11 +1,19 @@
 <?php
 
-namespace Ginidev\PledgPaymentGateway\Controller\Checkout;
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ *
+ * @author Gildas Rossignon <gildas@ginidev.com>
+ * @package Pledg_PledgPaymentGateway
+ */
+
+namespace Pledg\PledgPaymentGateway\Controller\Checkout;
 
 use Magento\Sales\Model\Order;
 
 /**
- * @package Ginidev\PledgPaymentGateway\Controller\Checkout
+ * @package Pledg\PledgPaymentGateway\Controller\Checkout
  */
 class Success extends AbstractAction {
 

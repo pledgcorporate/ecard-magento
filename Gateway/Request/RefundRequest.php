@@ -2,12 +2,15 @@
 /**
  * Copyright © 2016 Magento. All rights reserved.
  * See COPYING.txt for license details.
+ *
+ * @author Gildas Rossignon <gildas@ginidev.com>
+ * @package Pledg_PledgPaymentGateway
  */
-namespace Ginidev\PledgPaymentGateway\Gateway\Request;
+namespace Pledg\PledgPaymentGateway\Gateway\Request;
 
 use Magento\Payment\Gateway\Request\BuilderInterface;
 use Magento\Checkout\Model\Session;
-use Ginidev\PledgPaymentGateway\Gateway\Config\Config;
+use Pledg\PledgPaymentGateway\Gateway\Config\Config;
 use Psr\Log\LoggerInterface;
 
 class RefundRequest implements BuilderInterface
