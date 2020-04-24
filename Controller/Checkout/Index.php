@@ -42,7 +42,7 @@ class Index extends AbstractAction {
         $url .= '&phoneNumber=' . $order->getBillingAddress()->getData('telephone');
 
         // Address
-        $street = preg_replace('/\s+/', ' ', trim($order->getBillingAddress()->getData('street')));https://staging.front.ecard.pledg.co/purchase?merchantUid=mer_35c64fe7-aecc-469b-bbde-05c0d2572931&amountCents=100500&title=default&email=g_ildas@yahoo.fr&reference=000000031&currency=EUR&paymentNotificationUrl=&redirectUrl=http://pledg.loc:8888/pledg/checkout/success&cancelUrl=http://pledg.loc:8888/pledg/checkout/cancel?orderId=000000031&firstname=Gildas&lastname=Rossignon&phoneNumber=0782787242&address=%7B%22street%22%3A%222%2C%20rue%20Fr%C3%A9zier%22%2C%22city%22%3A%22Brest%22%2C%22zipcode%22%3A%2229200%22%2C%22stateProvince%22%3A%22Bretagne%22%2C%22country%22%3A%22FR%22%7D&shippingAddress=%7B%22street%22%3A%222%20rue%20Fr%C3%A9zier%22%2C%22city%22%3A%22Brest%22%2C%22zipcode%22%3A%2229200%22%2C%22stateProvince%22%3A%22Bretagne%22%2C%22country%22%3A%22FR%22%7D
+        $street = preg_replace('/\s+/', ' ', trim($order->getBillingAddress()->getData('street')));
         $street = str_replace(',', '', $street);
 
         $adress = '{';
