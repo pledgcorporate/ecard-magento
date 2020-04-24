@@ -15,6 +15,9 @@ namespace Pledg\PledgPaymentGateway\Controller\Checkout;
  */
 class Cancel extends AbstractAction {
 
+    /**
+     * Execute Cancel action
+     */
     public function execute() {
         $orderId = $this->getRequest()->get('orderId');
         $order =  $this->getOrderById($orderId);

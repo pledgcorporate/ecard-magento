@@ -17,6 +17,9 @@ use Magento\Sales\Model\Order;
  */
 class Success extends AbstractAction {
 
+    /**
+     * Execute Success order payment
+     */
     public function execute() {
         $pledgResult = $this->getRequest()->get("pledg_result");
 
@@ -28,27 +31,8 @@ class Success extends AbstractAction {
 
         //@Todo : Check signature
 
-
-        /*$isValid = $this->getCryptoHelper()->isValidSignature($this->getRequest()->getParams(), $this->getGatewayConfig()->getApiKey());
-        $result = $this->getRequest()->get("x_result");
-        $orderId = $this->getRequest()->get("x_reference");
-        $transactionId = $this->getRequest()->get("x_gateway_reference");
-
-        if(!$isValid) {
-            $this->getLogger()->debug('Possible site forgery detected: invalid response signature.');
-            $this->_redirect('checkout/onepage/error', array('_secure'=> false));
-            return;
-        }*/
-
-        /*if(!$orderId) {
-            $this->getLogger()->debug("Pledg returned a null order id. This may indicate an issue with the Pledg payment gateway.");
-            $this->_redirect('checkout/onepage/error', array('_secure'=> false));
-            return;
-        }
-
-        $order = $this->getOrderById($orderId);*/
         if(!$order) {
-            $this->getLogger()->debug("Pledg returned an id for an order that could not be retrieved: $orderId");
+            $this->getLogger()->debug("Pledg returned an id for an order that could not be retrieved");
             $this->_redirect('checkout/onepage/error', array('_secure'=> false));
             return;
         }
@@ -102,6 +86,12 @@ class Success extends AbstractAction {
         }
     }
 
+    /**
+     * Check if Status exists
+     *
+     * @param $orderStatus
+     * @return bool
+     */
     private function statusExists($orderStatus)
     {
         $statuses = $this->getObjectManager()
@@ -114,6 +104,12 @@ class Success extends AbstractAction {
         return false;
     }
 
+    /**
+     * Generate Invoice
+     *
+     * @param $order
+     * @param $transactionId
+     */
     private function invoiceOrder($order, $transactionId)
     {
         if(!$order->canInvoice()){
