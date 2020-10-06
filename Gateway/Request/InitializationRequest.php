@@ -8,6 +8,7 @@
  */
 namespace Pledg\PledgPaymentGateway\Gateway\Request;
 
+use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 use Magento\Sales\Model\Order;
 use Magento\Payment\Gateway\Data\Order\OrderAdapter;
 use Magento\Payment\Gateway\Request\BuilderInterface;
@@ -41,7 +42,7 @@ class InitializationRequest implements BuilderInterface
      * @param OrderAdapter $order
      * @return bool;
      */
-    private function validateQuote(OrderAdapter $order) {
+    private function validateQuote(OrderAdapterInterface $order) {
         $total = $order->getGrandTotalAmount();
         /*if($total < 20) {
             $this->_session->setPledgErrorMessage(__("Pledg doesn't support purchases less than $20."));

@@ -1,5 +1,5 @@
 <?php
-
+// phpcs:ignoreFile
 /**
  * Copyright © 2016 Magento. All rights reserved.
  * See COPYING.txt for license details.
@@ -10,6 +10,7 @@
 
 namespace Pledg\PledgPaymentGateway\Controller\Checkout;
 
+use Magento\Quote\Model\QuoteIdMaskFactory;
 use Magento\Sales\Model\Order;
 
 /**
@@ -84,35 +85,147 @@ class Index extends AbstractAction {
     }
 
     /**
-     * Execute Payment Form
-     *
-     * @return void
+     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function execute() {
-        $this->setCode($this->getRequest()->getParam('code'));
-        $code = $this->getRequest()->getParam('code');
 
-        try {
-            $order = $this->getOrder();
-            if ($order->getState() === Order::STATE_PENDING_PAYMENT) {
-                $payload = $this->getPayload($order);
-                $this->postToCheckout($payload);
-            } else if ($order->getState() === Order::STATE_CANCELED) {
-                $errorMessage = $this->getCheckoutSession()->getPledgErrorMessage(); //set in InitializationRequest
-                if ($errorMessage) {
-                    $this->getMessageManager()->addWarningMessage($errorMessage);
-                    $errorMessage = $this->getCheckoutSession()->unsPledgErrorMessage();
-                }
-                $this->getCheckoutHelper()->restoreQuote(); //restore cart
-                $this->_redirect('checkout/cart');
-            } else {
-                $this->getLogger()->debug('Order in unrecognized state: ' . $order->getState());
-                $this->_redirect('checkout/cart');
-            }
-        } catch (Exception $ex) {
-            $this->getLogger()->debug('An exception was encountered in pledg/checkout/index: ' . $ex->getMessage());
-            $this->getLogger()->debug($ex->getTraceAsString());
-            $this->getMessageManager()->addErrorMessage(__('Impossible de procéder au paiement Pledg.'));
+        $this->setCode($this->getRequest()->getParam('code'));
+        $order = $this->getOrder();
+
+        // Check order status
+        if ($order->getState() !== Order::STATE_PENDING_PAYMENT) {
+            return $this->errorOrder('Order in unrecognized state: ' . $order->getState());
         }
+
+        // Decode secret
+        $dataPledg = explode('#'.$this->getRequest()->getParam('code').'#',
+            base64_decode($this->getRequest()->getParam('secret'))
+        );
+
+        if (count($dataPledg) != 3) {
+            return $this->errorOrder('Secret Pledg invalid count');
+        }
+
+        // Check merchant uid
+        if ($this->getMerchantUid() != $dataPledg[2]) {
+            return $this->errorOrder('Secret Pledg invalid uid');
+        }
+
+        // Check transaction id
+        $transactionId = $dataPledg[0];
+        if ($transactionId != $this->getRequest()->getParam('transaction_id')) {
+            return $this->errorOrder('Pledg Transaction ID invalid');
+        }
+
+        // Check quote id
+        $quoteMaskId = $dataPledg[1];
+        $quoteMask = $this->getQuoteIdMaskFactory()->create()->load($quoteMaskId, 'masked_id');
+        if ($dataPledg[1] != $this->getOrder()->getQuoteId() && $quoteMask->getQuoteId() != $this->getOrder()->getQuoteId()) {
+            return $this->errorOrder('Secret Pledg invalid quote');
+        }
+
+        $orderState = Order::STATE_PROCESSING;
+
+        $orderStatus = $this->getGatewayConfig()->getPledgApprovedOrderStatus();
+        if (!$this->statusExists($orderStatus)) {
+            $orderStatus = $order->getConfig()->getStateDefaultStatus($orderState);
+        }
+
+        $emailCustomer = $this->getGatewayConfig()->isEmailCustomer();
+
+        $order->setState($orderState)
+            ->setStatus($orderStatus)
+            ->addStatusHistoryComment("Pledg authorisation success. Transaction #$transactionId")
+            ->setIsCustomerNotified($emailCustomer);
+
+        $payment = $order->getPayment();
+        $payment->setTransactionId($transactionId);
+        $payment->addTransaction(\Magento\Sales\Model\Order\Payment\Transaction::TYPE_CAPTURE, null, true);
+        $order->save();
+
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $emailSender = $objectManager->create('\Magento\Sales\Model\Order\Email\Sender\OrderSender');
+        $emailSender->send($order);
+
+        $invoiceAutomatically = $this->getGatewayConfig()->isAutomaticInvoice();
+        if ($invoiceAutomatically) {
+            $this->invoiceOrder($order, $transactionId);
+        }
+
+        $this->getMessageManager()->addSuccessMessage(__("Le paiement Pledg a été validé"));
+        return $this->_redirect('checkout/onepage/success', array('_secure'=> false));
+    }
+
+    /**
+     * Check if Status exists
+     *
+     * @param $orderStatus
+     * @return bool
+     */
+    private function statusExists($orderStatus)
+    {
+        $statuses = $this->getObjectManager()
+            ->get('Magento\Sales\Model\Order\Status')
+            ->getResourceCollection()
+            ->getData();
+        foreach ($statuses as $status) {
+            if ($orderStatus === $status["status"]) return true;
+        }
+        return false;
+    }
+
+    /**
+     * Generate Invoice
+     *
+     * @param $order
+     * @param $transactionId
+     */
+    private function invoiceOrder($order, $transactionId)
+    {
+        if(!$order->canInvoice()){
+            throw new \Magento\Framework\Exception\LocalizedException(
+                __('Cannot create an invoice.')
+            );
+        }
+
+        $invoice = $this->getObjectManager()
+            ->create('Magento\Sales\Model\Service\InvoiceService')
+            ->prepareInvoice($order);
+
+        if (!$invoice->getTotalQty()) {
+            throw new \Magento\Framework\Exception\LocalizedException(
+                __('You can\'t create an invoice without products.')
+            );
+        }
+
+        /*
+         * Look Magento/Sales/Model/Order/Invoice.register() for CAPTURE_OFFLINE explanation.
+         * Basically, if !config/can_capture and config/is_gateway and CAPTURE_OFFLINE and
+         * Payment.IsTransactionPending => pay (Invoice.STATE = STATE_PAID...)
+         */
+        $invoice->setTransactionId($transactionId);
+        $invoice->setRequestedCaptureCase(Order\Invoice::CAPTURE_OFFLINE);
+        $invoice->register();
+
+        $transaction = $this->getObjectManager()->create('Magento\Framework\DB\Transaction')
+            ->addObject($invoice)
+            ->addObject($invoice->getOrder());
+        $transaction->save();
+    }
+
+    /**
+     * @param string|string $message
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    private function errorOrder(string $message) {
+        $this
+            ->getCheckoutHelper()
+            ->cancelCurrentOrder(
+            "Order #".($this->getOrder()->getId())." $message."
+        );
+        $this->getCheckoutHelper()->restoreQuote(); //restore cart
+        $this->getMessageManager()->addErrorMessage(__($message));
+        return $this->_redirect('checkout/cart', array('_secure'=> false));
     }
 }

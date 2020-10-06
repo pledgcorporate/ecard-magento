@@ -35,24 +35,12 @@
                 <field id="api_key" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Merchant UID</label>
                 </field>
-                <!--<field id="specificcountry" translate="label" type="multiselect" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>Payment from Specific Countries</label>
-                    <source_model>Pledg\PledgPaymentGateway\Model\Config\Source\RestrictedCountry</source_model>
-                </field>-->
-                <!--<field id="ginidev_approved_order_status" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>Status for Pledg Approved Orders</label>
-                    <source_model>Magento\Sales\Model\Config\Source\Order\Status\Processing</source_model>
-                    <tooltip>Select ‘Pledg Processed’ if you want to easily locate all Pledg transactions in the Orders page.</tooltip>
-                </field>-->
-                <!--<field id="automatic_invoice" translate="label" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>Automatic Invoice (for refunding, must be enabled)</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <tooltip>If disabled, online refunding in Magento with Pledg will not be possible.</tooltip>
+                <field id="seuil" translate="label" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0" type="text">
+                    <label>Montant minimum d'activation du moyen de paiement</label>
+                    <comment>Indiqué ici le montant minimum de la commande pour activer ce moyen de paiement.</comment>
+                    <tooltip>Laissez "0" si vous ne voulez pas appliquer de montant minimum.</tooltip>
+                    <validate>validate-digits validate-not-negative-number</validate>
                 </field>
-                <field id="email_customer" translate="label" type="select" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>Email Customer</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>-->
                 <field id="sort_order" translate="label" type="text" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Sort Order</label>
                     <frontend_class>validate-number</frontend_class>
@@ -79,6 +67,12 @@
                 </field>
                 <field id="api_key" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Merchant UID</label>
+                </field>
+                <field id="seuil" translate="label" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0" type="text">
+                    <label>Montant minimum d'activation du moyen de paiement</label>
+                    <comment>Indiqué ici le montant minimum de la commande pour activer ce moyen de paiement.</comment>
+                    <tooltip>Laissez "0" si vous ne voulez pas appliquer de montant minimum.</tooltip>
+                    <validate>validate-digits validate-not-negative-number</validate>
                 </field>
                 <field id="sort_order" translate="label" type="text" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Sort Order</label>
@@ -107,6 +101,12 @@
                 <field id="api_key" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Merchant UID</label>
                 </field>
+                <field id="seuil" translate="label" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0" type="text">
+                    <label>Montant minimum d'activation du moyen de paiement</label>
+                    <comment>Indiqué ici le montant minimum de la commande pour activer ce moyen de paiement.</comment>
+                    <tooltip>Laissez "0" si vous ne voulez pas appliquer de montant minimum.</tooltip>
+                    <validate>validate-digits validate-not-negative-number</validate>
+                </field>
                 <field id="sort_order" translate="label" type="text" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Sort Order</label>
                     <frontend_class>validate-number</frontend_class>
@@ -134,6 +134,12 @@
                 <field id="api_key" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Merchant UID</label>
                 </field>
+                <field id="seuil" translate="label" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0" type="text">
+                    <label>Montant minimum d'activation du moyen de paiement</label>
+                    <comment>Indiqué ici le montant minimum de la commande pour activer ce moyen de paiement.</comment>
+                    <tooltip>Laissez "0" si vous ne voulez pas appliquer de montant minimum.</tooltip>
+                    <validate>validate-digits validate-not-negative-number</validate>
+                </field>
                 <field id="sort_order" translate="label" type="text" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Sort Order</label>
                     <frontend_class>validate-number</frontend_class>
@@ -157,6 +163,12 @@
                     <frontend_model>Pledg\PledgPaymentGateway\Block\System\Config\Form\Field\Image</frontend_model>
                     <upload_dir config="system/filesystem/media" scope_info="1">sales/store/logo</upload_dir>
                     <base_url type="media" scope_info="1">sales/store/logo</base_url>
+                </field>
+                <field id="seuil" translate="label" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0" type="text">
+                    <label>Montant minimum d'activation du moyen de paiement</label>
+                    <comment>Indiqué ici le montant minimum de la commande pour activer ce moyen de paiement.</comment>
+                    <tooltip>Laissez "0" si vous ne voulez pas appliquer de montant minimum.</tooltip>
+                    <validate>validate-digits validate-not-negative-number</validate>
                 </field>
                 <field id="api_key" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Merchant UID</label>
@@ -188,6 +200,12 @@
                 <field id="api_key" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Merchant UID</label>
                 </field>
+                <field id="seuil" translate="label" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0" type="text">
+                    <label>Montant minimum d'activation du moyen de paiement</label>
+                    <comment>Indiqué ici le montant minimum de la commande pour activer ce moyen de paiement.</comment>
+                    <tooltip>Laissez "0" si vous ne voulez pas appliquer de montant minimum.</tooltip>
+                    <validate>validate-digits validate-not-negative-number</validate>
+                </field>
                 <field id="sort_order" translate="label" type="text" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Sort Order</label>
                     <frontend_class>validate-number</frontend_class>
@@ -214,6 +232,12 @@
                 </field>
                 <field id="api_key" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Merchant UID</label>
+                </field>
+                <field id="seuil" translate="label" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0" type="text">
+                    <label>Montant minimum d'activation du moyen de paiement</label>
+                    <comment>Indiqué ici le montant minimum de la commande pour activer ce moyen de paiement.</comment>
+                    <tooltip>Laissez "0" si vous ne voulez pas appliquer de montant minimum.</tooltip>
+                    <validate>validate-digits validate-not-negative-number</validate>
                 </field>
                 <field id="sort_order" translate="label" type="text" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Sort Order</label>
@@ -242,6 +266,12 @@
                 <field id="api_key" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Merchant UID</label>
                 </field>
+                <field id="seuil" translate="label" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0" type="text">
+                    <label>Montant minimum d'activation du moyen de paiement</label>
+                    <comment>Indiqué ici le montant minimum de la commande pour activer ce moyen de paiement.</comment>
+                    <tooltip>Laissez "0" si vous ne voulez pas appliquer de montant minimum.</tooltip>
+                    <validate>validate-digits validate-not-negative-number</validate>
+                </field>
                 <field id="sort_order" translate="label" type="text" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Sort Order</label>
                     <frontend_class>validate-number</frontend_class>
@@ -269,6 +299,12 @@
                 <field id="api_key" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Merchant UID</label>
                 </field>
+                <field id="seuil" translate="label" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0" type="text">
+                    <label>Montant minimum d'activation du moyen de paiement</label>
+                    <comment>Indiqué ici le montant minimum de la commande pour activer ce moyen de paiement.</comment>
+                    <tooltip>Laissez "0" si vous ne voulez pas appliquer de montant minimum.</tooltip>
+                    <validate>validate-digits validate-not-negative-number</validate>
+                </field>
                 <field id="sort_order" translate="label" type="text" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Sort Order</label>
                     <frontend_class>validate-number</frontend_class>
@@ -295,6 +331,12 @@
                 </field>
                 <field id="api_key" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Merchant UID</label>
+                </field>
+                <field id="seuil" translate="label" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0" type="text">
+                    <label>Montant minimum d'activation du moyen de paiement</label>
+                    <comment>Indiqué ici le montant minimum de la commande pour activer ce moyen de paiement.</comment>
+                    <tooltip>Laissez "0" si vous ne voulez pas appliquer de montant minimum.</tooltip>
+                    <validate>validate-digits validate-not-negative-number</validate>
                 </field>
                 <field id="sort_order" translate="label" type="text" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Sort Order</label>

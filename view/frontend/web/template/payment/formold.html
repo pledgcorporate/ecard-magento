@@ -18,9 +18,9 @@
             <span data-bind="text: getTitle()"></span>
         </label>
     </div>
-	<div class="payment-method-content">
-	    <div class="payment-method-note" data-bind="text: getDescription()"></div>
-	</div>
+    <div class="payment-method-content">
+        <div class="payment-method-note" data-bind="text: getDescription()"></div>
+    </div>
     <div class="payment-method-content">
         <!-- ko foreach: getRegion('messages') -->
         <!-- ko template: getTemplate() --><!-- /ko -->
@@ -35,29 +35,13 @@
             <!-- ko template: getTemplate() --><!-- /ko -->
             <!--/ko-->
         </div>
-        <p class="pledg-payments-billing-address-warning" data-bind="if: !isBillingAddressSet()">
-            <!-- ko i18n: 'Please update your billing address to proceed.'--><!-- /ko -->
-        </p>
-
-
-        <button type="button" class="trigger_pledg_form"
-                data-bind="
-             attr: {'id': 'trigger_pledg_form_' + getCode()}
-             " style="display: none;"></button>
-
-        <div class="container_pledg_form"
-             data-bind="
-             attr: {'id': 'container_pledg_form_' + getCode()}
-             "></div>
         <div class="actions-toolbar">
             <div class="primary">
                 <button class="action primary checkout"
-                        style="display: none;"
                         type="submit"
                         data-bind="
-                        enable: isPlaceOrderEnabled(),
-                        attr: {title: $t('Place Order'), 'id': 'button_pledg_form_' + getCode()},
-                        afterRender: onCheckoutFormRendered
+                        click: placeOrder,
+                        attr: {title: $t('Place Order')}
                         ">
                     <span data-bind="i18n: 'Place Order'"></span>
                 </button>

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<page>
+    <head>
+        <css src="Pledg_PledgPaymentGateway::css/pledg.css" />
+    </head>
+    <body>
+        <referenceBlock name="head.additional">
+            <block template="head.phtml" class="Pledg\PledgPaymentGateway\Block\Head" name="pledg_payment_gateway_block_head" />
+        </referenceBlock>
+    </body>
+</page>

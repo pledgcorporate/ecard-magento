@@ -44,6 +44,10 @@ class PaymentMethodAvailable implements ObserverInterface
             'pledg_gateway_10',
         ];
 
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $cart = $objectManager->get('\Magento\Checkout\Model\Cart');
+        $grandTotal = $cart->getQuote()->getGrandTotal();
+
         // you can replace "checkmo" with your required payment method code
         if(in_array($observer->getEvent()->getMethodInstance()->getCode(), $pledgCodes)){
             $checkResult = $observer->getEvent()->getResult();
@@ -52,6 +56,19 @@ class PaymentMethodAvailable implements ObserverInterface
                 $this
                     ->_scopeConfig
                     ->getValue('payment/'.$observer->getEvent()->getMethodInstance()->getCode().'/active')
+                && (
+                    $this
+                        ->_scopeConfig
+                        ->getValue('payment/'.$observer->getEvent()->getMethodInstance()->getCode().'/seuil')
+                        ==
+                        0
+                    ||
+                    $this
+                        ->_scopeConfig
+                        ->getValue('payment/'.$observer->getEvent()->getMethodInstance()->getCode().'/seuil')
+                        <
+                        $grandTotal
+                )
             ); //this is disabling the payment method at checkout page
         }
     }

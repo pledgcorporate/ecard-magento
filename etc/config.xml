@@ -47,6 +47,7 @@
                 <order_status>processing</order_status>
                 <description>Payer en plusieurs fois</description>
                 <api_key />
+                <seuil>0</seuil>
                 <gateway_url>https://front.ecard.pledg.co/purchase</gateway_url>
                 <staging_url>https://staging.front.ecard.pledg.co/purchase</staging_url>
                 <specificcountry />
@@ -76,6 +77,7 @@
                 <order_status>processing</order_status>
                 <description>Payer en plusieurs fois</description>
                 <api_key />
+                <seuil>0</seuil>
                 <gateway_url>https://front.ecard.pledg.co/purchase</gateway_url>
                 <staging_url>https://staging.front.ecard.pledg.co/purchase</staging_url>
                 <specificcountry />
@@ -105,6 +107,7 @@
                 <order_status>processing</order_status>
                 <description>Payer en plusieurs fois</description>
                 <api_key />
+                <seuil>0</seuil>
                 <gateway_url>https://front.ecard.pledg.co/purchase</gateway_url>
                 <staging_url>https://staging.front.ecard.pledg.co/purchase</staging_url>
                 <specificcountry />
@@ -134,6 +137,7 @@
                 <order_status>processing</order_status>
                 <description>Payer en plusieurs fois</description>
                 <api_key />
+                <seuil>0</seuil>
                 <gateway_url>https://front.ecard.pledg.co/purchase</gateway_url>
                 <staging_url>https://staging.front.ecard.pledg.co/purchase</staging_url>
                 <specificcountry />
@@ -163,6 +167,7 @@
                 <order_status>processing</order_status>
                 <description>Payer en plusieurs fois</description>
                 <api_key />
+                <seuil>0</seuil>
                 <gateway_url>https://front.ecard.pledg.co/purchase</gateway_url>
                 <staging_url>https://staging.front.ecard.pledg.co/purchase</staging_url>
                 <specificcountry />
@@ -192,6 +197,7 @@
                 <order_status>processing</order_status>
                 <description>Payer en plusieurs fois</description>
                 <api_key />
+                <seuil>0</seuil>
                 <gateway_url>https://front.ecard.pledg.co/purchase</gateway_url>
                 <staging_url>https://staging.front.ecard.pledg.co/purchase</staging_url>
                 <specificcountry />
@@ -221,6 +227,7 @@
                 <order_status>processing</order_status>
                 <description>Payer en plusieurs fois</description>
                 <api_key />
+                <seuil>0</seuil>
                 <gateway_url>https://front.ecard.pledg.co/purchase</gateway_url>
                 <staging_url>https://staging.front.ecard.pledg.co/purchase</staging_url>
                 <specificcountry />
@@ -250,6 +257,7 @@
                 <order_status>processing</order_status>
                 <description>Payer en plusieurs fois</description>
                 <api_key />
+                <seuil>0</seuil>
                 <gateway_url>https://front.ecard.pledg.co/purchase</gateway_url>
                 <staging_url>https://staging.front.ecard.pledg.co/purchase</staging_url>
                 <specificcountry />
@@ -279,6 +287,7 @@
                 <order_status>processing</order_status>
                 <description>Payer en plusieurs fois</description>
                 <api_key />
+                <seuil>0</seuil>
                 <gateway_url>https://front.ecard.pledg.co/purchase</gateway_url>
                 <staging_url>https://staging.front.ecard.pledg.co/purchase</staging_url>
                 <specificcountry />
@@ -308,6 +317,7 @@
                 <order_status>processing</order_status>
                 <description>Payer en plusieurs fois</description>
                 <api_key />
+                <seuil>0</seuil>
                 <gateway_url>https://front.ecard.pledg.co/purchase</gateway_url>
                 <staging_url>https://staging.front.ecard.pledg.co/purchase</staging_url>
                 <specificcountry />

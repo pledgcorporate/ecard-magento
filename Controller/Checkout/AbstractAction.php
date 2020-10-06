@@ -14,6 +14,8 @@ use Magento\Framework\App\Action\Action;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Quote\Api\CartManagementInterface;
+use Magento\Quote\Model\QuoteIdMaskFactory;
 use Magento\Sales\Model\OrderFactory;
 use Pledg\PledgPaymentGateway\Helper\Crypto;
 use Pledg\PledgPaymentGateway\Helper\Data;
@@ -50,6 +52,10 @@ abstract class AbstractAction extends Action {
 
     private $_scopeConfig;
 
+    private $_quoteIdMaskFactory;
+
+    private $_quoteManagement;
+
     protected $_code;
 
     public function __construct(
@@ -61,7 +67,10 @@ abstract class AbstractAction extends Action {
         Data $dataHelper,
         Checkout $checkoutHelper,
         ScopeConfigInterface $scopeConfig,
-        LoggerInterface $logger) {
+        LoggerInterface $logger,
+        QuoteIdMaskFactory $quoteIdMaskFactory,
+        CartManagementInterface $quoteManagement
+        ) {
         parent::__construct($context);
         $this->_checkoutSession = $checkoutSession;
         $this->_orderFactory = $orderFactory;
@@ -72,6 +81,8 @@ abstract class AbstractAction extends Action {
         $this->_messageManager = $context->getMessageManager();
         $this->_scopeConfig = $scopeConfig;
         $this->_logger = $logger;
+        $this->_quoteIdMaskFactory = $quoteIdMaskFactory;
+        $this->_quoteManagement = $quoteManagement;
     }
 
     protected function getContext() {
@@ -108,6 +119,14 @@ abstract class AbstractAction extends Action {
 
     protected function getLogger() {
         return $this->_logger;
+    }
+
+    protected function getQuoteIdMaskFactory() {
+        return $this->_quoteIdMaskFactory;
+    }
+
+    protected function getQuoteManagement() {
+        return $this->_quoteManagement;
     }
 
     protected function getOrder()
