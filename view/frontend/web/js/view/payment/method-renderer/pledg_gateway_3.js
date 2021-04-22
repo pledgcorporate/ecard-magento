@@ -136,7 +136,7 @@ define(
             },
 
             getAllowedCountries: function() {
-                return window.checkoutConfig.payment.pledg_gateway.allowed_countries;
+                return window.checkoutConfig.payment.pledg_gateway_3.allowed_countries;
             },
 
             isPlaceOrderEnabled: function()

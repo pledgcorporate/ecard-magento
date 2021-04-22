@@ -10,26 +10,21 @@ namespace Pledg\PledgPaymentGateway\Gateway\Request;
 
 use Magento\Payment\Gateway\Request\BuilderInterface;
 use Magento\Checkout\Model\Session;
-use Pledg\PledgPaymentGateway\Gateway\Config\Config;
 use Psr\Log\LoggerInterface;
 
 class RefundRequest implements BuilderInterface
 {
     private $_logger;
     private $_session;
-    private $_gatewayConfig;
 
     /**
-     * @param Config $gatewayConfig
      * @param LoggerInterface $logger
      * @param Session $session
      */
     public function __construct(
-        Config $gatewayConfig,
         LoggerInterface $logger,
         Session $session
     ) {
-        $this->_gatewayConfig = $gatewayConfig;
         $this->_logger = $logger;
         $this->_session = $session;
     }
@@ -46,9 +41,13 @@ class RefundRequest implements BuilderInterface
      * @return array
      */
     public function build(array $buildSubject) {
-    	$gateway_api_key = $this->_gatewayConfig->getApiKey();
-    	$gateway_merchant_id = $this->_gatewayConfig->getMerchantNumber();
-    	$gateway_refund_gateway_url = $this->_gatewayConfig->getRefundUrl();
+        // TODO : configuration should be retrieved from order payment method
+//    	$gateway_api_key = $this->_gatewayConfig->getApiKey();
+//    	$gateway_merchant_id = $this->_gatewayConfig->getMerchantNumber();
+//    	$gateway_refund_gateway_url = $this->_gatewayConfig->getRefundUrl();
+        $gateway_merchant_id = '';
+        $gateway_api_key = '';
+        $gateway_refund_gateway_url = '';
     	return [ 'GATEWAY_MERCHANT_ID'=>$gateway_merchant_id, 'GATEWAY_API_KEY' => $gateway_api_key, 'GATEWAY_REFUND_GATEWAY_URL'=>$gateway_refund_gateway_url ];
     }
 }

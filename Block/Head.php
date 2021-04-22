@@ -35,7 +35,7 @@ class Head extends Template
      */
     public function getCustomJs()
     {
-        if ($this->_scopeConfig->getValue('payment/pledg_gateway/staging')) {
+        if ($this->_scopeConfig->getValue('pledg_gateway/payment/staging')) {
             return 'https://s3-eu-west-1.amazonaws.com/pledg-assets/ecard-plugin/staging/plugin.min.js';
         }
 
