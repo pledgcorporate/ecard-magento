@@ -178,7 +178,7 @@
         <arguments>
             <argument name="requestBuilder" xsi:type="object">PledgPaymentGatewayRefundRequest</argument>
             <argument name="transferFactory" xsi:type="object">Pledg\PledgPaymentGateway\Gateway\Http\DummyTransferFactory</argument> <!-- [Payment/Model/Method/Adapter][executeCommand]ERROR!Cannot instantiate interface Magento\Payment\Gateway\Http\TransferFactoryInterface if empty -->
-            <argument name="handler" xsi:type="object">Pledg\PledgPaymentGateway\Model\PledgPayment</argument>
+            <argument name="handler" xsi:type="object">Pledg\PledgPaymentGateway\Gateway\Response\RefundHandler</argument>
             <argument name="client" xsi:type="object">Pledg\PledgPaymentGateway\Gateway\Http\Client\RefundClient</argument> <!-- [Payment/Model/Method/Adapter][executeCommand]ERROR getting command!Cannot instantiate interface Magento\Payment\Gateway\Http\ClientInterface if empty-->
         </arguments>
     </virtualType>
