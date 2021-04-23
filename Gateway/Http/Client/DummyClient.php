@@ -5,7 +5,8 @@ namespace Pledg\PledgPaymentGateway\Gateway\Http\Client;
 use Magento\Payment\Gateway\Http\ClientInterface;
 use Magento\Payment\Gateway\Http\TransferInterface;
 
-class DummyClient implements ClientInterface {
+class DummyClient implements ClientInterface
+{
     /**
      * This is the place where requests to the Payment Gateway API are placed.
      * As we are a Redirect-based gateway and only used the "initialize" method,

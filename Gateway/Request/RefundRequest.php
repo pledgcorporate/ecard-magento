@@ -34,7 +34,8 @@ class RefundRequest implements BuilderInterface
      * @param array $buildSubject
      * @return array
      */
-    public function build(array $buildSubject) {
+    public function build(array $buildSubject)
+    {
         // TODO : configuration should be retrieved from order payment method
 //    	$gateway_api_key = $this->_gatewayConfig->getApiKey();
 //    	$gateway_merchant_id = $this->_gatewayConfig->getMerchantNumber();
@@ -42,6 +43,6 @@ class RefundRequest implements BuilderInterface
         $gateway_merchant_id = '';
         $gateway_api_key = '';
         $gateway_refund_gateway_url = '';
-    	return [ 'GATEWAY_MERCHANT_ID'=>$gateway_merchant_id, 'GATEWAY_API_KEY' => $gateway_api_key, 'GATEWAY_REFUND_GATEWAY_URL'=>$gateway_refund_gateway_url ];
+        return [ 'GATEWAY_MERCHANT_ID'=>$gateway_merchant_id, 'GATEWAY_API_KEY' => $gateway_api_key, 'GATEWAY_REFUND_GATEWAY_URL'=>$gateway_refund_gateway_url ];
     }
 }

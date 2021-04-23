@@ -15,7 +15,8 @@ use Magento\Framework\Exception\NoSuchEntityException;
  *
  * Provides helper methods for retrieving data for the pledg plugin
  */
-class Data extends AbstractHelper {
+class Data extends AbstractHelper
+{
     /**
      * @var \Magento\Framework\ObjectManagerInterface
      */
@@ -122,7 +123,8 @@ class Data extends AbstractHelper {
      * @throws NoSuchEntityException If given store doesn't exist.
      * @return string
      */
-    public function getCompleteUrl() {
+    public function getCompleteUrl()
+    {
         return $this->getStoreManager()->getStore()->getBaseUrl() . 'pledg/checkout/success';
     }
 
@@ -131,7 +133,8 @@ class Data extends AbstractHelper {
      * @throws NoSuchEntityException If given store doesn't exist.
      * @return string
      */
-    public function getCancelledUrl($orderId) {
+    public function getCancelledUrl($orderId)
+    {
         return $this->getStoreManager()->getStore()->getBaseUrl() . "pledg/checkout/cancel?orderId=$orderId";
     }
 

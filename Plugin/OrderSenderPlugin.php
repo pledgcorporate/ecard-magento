@@ -10,7 +10,7 @@ class OrderSenderPlugin
     {
         $payment = $order->getPayment()->getMethodInstance()->getCode();
 
-        if($payment === 'pledg_gateway' && $order->getState() !== 'processing'){
+        if ($payment === 'pledg_gateway' && $order->getState() !== 'processing') {
             return false;
         }
 

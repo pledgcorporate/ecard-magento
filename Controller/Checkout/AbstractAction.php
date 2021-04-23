@@ -17,8 +17,8 @@ use Psr\Log\LoggerInterface;
 /**
  * @package Pledg\PledgPaymentGateway\Controller\Checkout
  */
-abstract class AbstractAction extends Action {
-
+abstract class AbstractAction extends Action
+{
     const LOG_FILE = 'pledg.log';
     const PLEDG_DEFAULT_CURRENCY_CODE = 'EUR';
     const PLEDG_DEFAULT_COUNTRY_CODE = 'FR';
@@ -58,7 +58,7 @@ abstract class AbstractAction extends Action {
         LoggerInterface $logger,
         QuoteIdMaskFactory $quoteIdMaskFactory,
         CartManagementInterface $quoteManagement
-        ) {
+    ) {
         parent::__construct($context);
         $this->_checkoutSession = $checkoutSession;
         $this->_orderFactory = $orderFactory;
@@ -72,43 +72,53 @@ abstract class AbstractAction extends Action {
         $this->_quoteManagement = $quoteManagement;
     }
 
-    protected function getContext() {
+    protected function getContext()
+    {
         return $this->_context;
     }
 
-    protected function getCheckoutSession() {
+    protected function getCheckoutSession()
+    {
         return $this->_checkoutSession;
     }
 
-    protected function getOrderFactory() {
+    protected function getOrderFactory()
+    {
         return $this->_orderFactory;
     }
 
-    protected function getCryptoHelper() {
+    protected function getCryptoHelper()
+    {
         return $this->_cryptoHelper;
     }
 
-    protected function getDataHelper() {
+    protected function getDataHelper()
+    {
         return $this->_dataHelper;
     }
 
-    protected function getCheckoutHelper() {
+    protected function getCheckoutHelper()
+    {
         return $this->_checkoutHelper;
     }
 
-    protected function getMessageManager() {
+    protected function getMessageManager()
+    {
         return $this->_messageManager;
     }
 
-    protected function getLogger() {
+    protected function getLogger()
+    {
         return $this->_logger;
     }
 
-    protected function getQuoteIdMaskFactory() {
+    protected function getQuoteIdMaskFactory()
+    {
         return $this->_quoteIdMaskFactory;
     }
 
-    protected function getQuoteManagement() {
+    protected function getQuoteManagement()
+    {
         return $this->_quoteManagement;
     }
 
@@ -144,7 +154,8 @@ abstract class AbstractAction extends Action {
         return $this->_scopeConfig->getValue('pledg_gateway/payment/staging');
     }
 
-    protected function getUrlPayment() {
+    protected function getUrlPayment()
+    {
         if ($this->isStaging()) {
             $url = $this->_scopeConfig->getValue('pledg_gateway/payment/staging_url');
         } else {
@@ -156,11 +167,13 @@ abstract class AbstractAction extends Action {
         return $url;
     }
 
-    protected function setCode($code) {
+    protected function setCode($code)
+    {
         $this->_code = $code;
     }
 
-    protected function getMerchantUid() {
+    protected function getMerchantUid()
+    {
         return $this->_scopeConfig->getValue('payment/'.$this->_code.'/api_key');
     }
 
