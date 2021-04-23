@@ -18,18 +18,14 @@
             <pledg_gateway_1>
                 <model>Pledg1PaymentGatewayFacade</model>
                 <title>Pledg</title>
-                <payment_action>initialize</payment_action> <!--Important: read Magento\Sales\Model\Order-->
-                <active>0</active> <!--Plugin disabled by default. The user must configure it first.-->
-                <staging>1</staging> <!--Plugin disabled by default. The user must configure it first.-->
+                <payment_action>initialize</payment_action>
+                <active>0</active>
                 <is_gateway>1</is_gateway>
                 <order_status>processing</order_status>
                 <description>Payer en plusieurs fois</description>
-                <api_key />
-                <seuil>0</seuil>
-                <gateway_url>https://front.ecard.pledg.co/purchase</gateway_url>
-                <staging_url>https://staging.front.ecard.pledg.co/purchase</staging_url>
-                <specificcountry />
-                <can_initialize>1</can_initialize> <!--Important: read Magento\Sales\Model\Order-->
+                <allowspecific>1</allowspecific>
+                <specificcountry/>
+                <can_initialize>1</can_initialize>
                 <can_use_checkout>1</can_use_checkout>
                 <can_authorize>0</can_authorize>
                 <can_capture>0</can_capture>
@@ -48,18 +44,14 @@
             <pledg_gateway_2>
                 <model>Pledg2PaymentGatewayFacade</model>
                 <title>Pledg</title>
-                <payment_action>initialize</payment_action> <!--Important: read Magento\Sales\Model\Order-->
-                <active>0</active> <!--Plugin disabled by default. The user must configure it first.-->
-                <staging>1</staging> <!--Plugin disabled by default. The user must configure it first.-->
+                <payment_action>initialize</payment_action>
+                <active>0</active>
                 <is_gateway>1</is_gateway>
                 <order_status>processing</order_status>
                 <description>Payer en plusieurs fois</description>
-                <api_key />
-                <seuil>0</seuil>
-                <gateway_url>https://front.ecard.pledg.co/purchase</gateway_url>
-                <staging_url>https://staging.front.ecard.pledg.co/purchase</staging_url>
-                <specificcountry />
-                <can_initialize>1</can_initialize> <!--Important: read Magento\Sales\Model\Order-->
+                <allowspecific>1</allowspecific>
+                <specificcountry/>
+                <can_initialize>1</can_initialize>
                 <can_use_checkout>1</can_use_checkout>
                 <can_authorize>0</can_authorize>
                 <can_capture>0</can_capture>
@@ -78,18 +70,14 @@
             <pledg_gateway_3>
                 <model>Pledg3PaymentGatewayFacade</model>
                 <title>Pledg</title>
-                <payment_action>initialize</payment_action> <!--Important: read Magento\Sales\Model\Order-->
-                <active>0</active> <!--Plugin disabled by default. The user must configure it first.-->
-                <staging>1</staging> <!--Plugin disabled by default. The user must configure it first.-->
+                <payment_action>initialize</payment_action>
+                <active>0</active>
                 <is_gateway>1</is_gateway>
                 <order_status>processing</order_status>
                 <description>Payer en plusieurs fois</description>
-                <api_key />
-                <seuil>0</seuil>
-                <gateway_url>https://front.ecard.pledg.co/purchase</gateway_url>
-                <staging_url>https://staging.front.ecard.pledg.co/purchase</staging_url>
-                <specificcountry />
-                <can_initialize>1</can_initialize> <!--Important: read Magento\Sales\Model\Order-->
+                <allowspecific>1</allowspecific>
+                <specificcountry/>
+                <can_initialize>1</can_initialize>
                 <can_use_checkout>1</can_use_checkout>
                 <can_authorize>0</can_authorize>
                 <can_capture>0</can_capture>
@@ -108,18 +96,14 @@
             <pledg_gateway_4>
                 <model>Pledg4PaymentGatewayFacade</model>
                 <title>Pledg</title>
-                <payment_action>initialize</payment_action> <!--Important: read Magento\Sales\Model\Order-->
-                <active>0</active> <!--Plugin disabled by default. The user must configure it first.-->
-                <staging>1</staging> <!--Plugin disabled by default. The user must configure it first.-->
+                <payment_action>initialize</payment_action>
+                <active>0</active>
                 <is_gateway>1</is_gateway>
                 <order_status>processing</order_status>
                 <description>Payer en plusieurs fois</description>
-                <api_key />
-                <seuil>0</seuil>
-                <gateway_url>https://front.ecard.pledg.co/purchase</gateway_url>
-                <staging_url>https://staging.front.ecard.pledg.co/purchase</staging_url>
-                <specificcountry />
-                <can_initialize>1</can_initialize> <!--Important: read Magento\Sales\Model\Order-->
+                <allowspecific>1</allowspecific>
+                <specificcountry/>
+                <can_initialize>1</can_initialize>
                 <can_use_checkout>1</can_use_checkout>
                 <can_authorize>0</can_authorize>
                 <can_capture>0</can_capture>
@@ -138,18 +122,14 @@
             <pledg_gateway_5>
                 <model>Pledg5PaymentGatewayFacade</model>
                 <title>Pledg</title>
-                <payment_action>initialize</payment_action> <!--Important: read Magento\Sales\Model\Order-->
-                <active>0</active> <!--Plugin disabled by default. The user must configure it first.-->
-                <staging>1</staging> <!--Plugin disabled by default. The user must configure it first.-->
+                <payment_action>initialize</payment_action>
+                <active>0</active>
                 <is_gateway>1</is_gateway>
                 <order_status>processing</order_status>
                 <description>Payer en plusieurs fois</description>
-                <api_key />
-                <seuil>0</seuil>
-                <gateway_url>https://front.ecard.pledg.co/purchase</gateway_url>
-                <staging_url>https://staging.front.ecard.pledg.co/purchase</staging_url>
-                <specificcountry />
-                <can_initialize>1</can_initialize> <!--Important: read Magento\Sales\Model\Order-->
+                <allowspecific>1</allowspecific>
+                <specificcountry/>
+                <can_initialize>1</can_initialize>
                 <can_use_checkout>1</can_use_checkout>
                 <can_authorize>0</can_authorize>
                 <can_capture>0</can_capture>
@@ -168,18 +148,14 @@
             <pledg_gateway_6>
                 <model>Pledg6PaymentGatewayFacade</model>
                 <title>Pledg</title>
-                <payment_action>initialize</payment_action> <!--Important: read Magento\Sales\Model\Order-->
-                <active>0</active> <!--Plugin disabled by default. The user must configure it first.-->
-                <staging>1</staging> <!--Plugin disabled by default. The user must configure it first.-->
+                <payment_action>initialize</payment_action>
+                <active>0</active>
                 <is_gateway>1</is_gateway>
                 <order_status>processing</order_status>
                 <description>Payer en plusieurs fois</description>
-                <api_key />
-                <seuil>0</seuil>
-                <gateway_url>https://front.ecard.pledg.co/purchase</gateway_url>
-                <staging_url>https://staging.front.ecard.pledg.co/purchase</staging_url>
-                <specificcountry />
-                <can_initialize>1</can_initialize> <!--Important: read Magento\Sales\Model\Order-->
+                <allowspecific>1</allowspecific>
+                <specificcountry/>
+                <can_initialize>1</can_initialize>
                 <can_use_checkout>1</can_use_checkout>
                 <can_authorize>0</can_authorize>
                 <can_capture>0</can_capture>
@@ -198,18 +174,14 @@
             <pledg_gateway_7>
                 <model>Pledg7PaymentGatewayFacade</model>
                 <title>Pledg</title>
-                <payment_action>initialize</payment_action> <!--Important: read Magento\Sales\Model\Order-->
-                <active>0</active> <!--Plugin disabled by default. The user must configure it first.-->
-                <staging>1</staging> <!--Plugin disabled by default. The user must configure it first.-->
+                <payment_action>initialize</payment_action>
+                <active>0</active>
                 <is_gateway>1</is_gateway>
                 <order_status>processing</order_status>
                 <description>Payer en plusieurs fois</description>
-                <api_key />
-                <seuil>0</seuil>
-                <gateway_url>https://front.ecard.pledg.co/purchase</gateway_url>
-                <staging_url>https://staging.front.ecard.pledg.co/purchase</staging_url>
-                <specificcountry />
-                <can_initialize>1</can_initialize> <!--Important: read Magento\Sales\Model\Order-->
+                <allowspecific>1</allowspecific>
+                <specificcountry/>
+                <can_initialize>1</can_initialize>
                 <can_use_checkout>1</can_use_checkout>
                 <can_authorize>0</can_authorize>
                 <can_capture>0</can_capture>
@@ -228,18 +200,14 @@
             <pledg_gateway_8>
                 <model>Pledg8PaymentGatewayFacade</model>
                 <title>Pledg</title>
-                <payment_action>initialize</payment_action> <!--Important: read Magento\Sales\Model\Order-->
-                <active>0</active> <!--Plugin disabled by default. The user must configure it first.-->
-                <staging>1</staging> <!--Plugin disabled by default. The user must configure it first.-->
+                <payment_action>initialize</payment_action>
+                <active>0</active>
                 <is_gateway>1</is_gateway>
                 <order_status>processing</order_status>
                 <description>Payer en plusieurs fois</description>
-                <api_key />
-                <seuil>0</seuil>
-                <gateway_url>https://front.ecard.pledg.co/purchase</gateway_url>
-                <staging_url>https://staging.front.ecard.pledg.co/purchase</staging_url>
-                <specificcountry />
-                <can_initialize>1</can_initialize> <!--Important: read Magento\Sales\Model\Order-->
+                <allowspecific>1</allowspecific>
+                <specificcountry/>
+                <can_initialize>1</can_initialize>
                 <can_use_checkout>1</can_use_checkout>
                 <can_authorize>0</can_authorize>
                 <can_capture>0</can_capture>
@@ -258,18 +226,14 @@
             <pledg_gateway_9>
                 <model>Pledg9PaymentGatewayFacade</model>
                 <title>Pledg</title>
-                <payment_action>initialize</payment_action> <!--Important: read Magento\Sales\Model\Order-->
-                <active>0</active> <!--Plugin disabled by default. The user must configure it first.-->
-                <staging>1</staging> <!--Plugin disabled by default. The user must configure it first.-->
+                <payment_action>initialize</payment_action>
+                <active>0</active>
                 <is_gateway>1</is_gateway>
                 <order_status>processing</order_status>
                 <description>Payer en plusieurs fois</description>
-                <api_key />
-                <seuil>0</seuil>
-                <gateway_url>https://front.ecard.pledg.co/purchase</gateway_url>
-                <staging_url>https://staging.front.ecard.pledg.co/purchase</staging_url>
-                <specificcountry />
-                <can_initialize>1</can_initialize> <!--Important: read Magento\Sales\Model\Order-->
+                <allowspecific>1</allowspecific>
+                <specificcountry/>
+                <can_initialize>1</can_initialize>
                 <can_use_checkout>1</can_use_checkout>
                 <can_authorize>0</can_authorize>
                 <can_capture>0</can_capture>
@@ -288,18 +252,14 @@
             <pledg_gateway_10>
                 <model>Pledg10PaymentGatewayFacade</model>
                 <title>Pledg</title>
-                <payment_action>initialize</payment_action> <!--Important: read Magento\Sales\Model\Order-->
-                <active>0</active> <!--Plugin disabled by default. The user must configure it first.-->
-                <staging>1</staging> <!--Plugin disabled by default. The user must configure it first.-->
+                <payment_action>initialize</payment_action>
+                <active>0</active>
                 <is_gateway>1</is_gateway>
                 <order_status>processing</order_status>
                 <description>Payer en plusieurs fois</description>
-                <api_key />
-                <seuil>0</seuil>
-                <gateway_url>https://front.ecard.pledg.co/purchase</gateway_url>
-                <staging_url>https://staging.front.ecard.pledg.co/purchase</staging_url>
-                <specificcountry />
-                <can_initialize>1</can_initialize> <!--Important: read Magento\Sales\Model\Order-->
+                <allowspecific>1</allowspecific>
+                <specificcountry/>
+                <can_initialize>1</can_initialize>
                 <can_use_checkout>1</can_use_checkout>
                 <can_authorize>0</can_authorize>
                 <can_capture>0</can_capture>
