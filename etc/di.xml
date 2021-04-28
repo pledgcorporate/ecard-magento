@@ -448,9 +448,4 @@
     <type name="\Magento\Sales\Model\Order\Email\Sender\OrderSender">
         <plugin name="Pledg-OrderSender-Plugin" type="Pledg\PledgPaymentGateway\Plugin\OrderSenderPlugin" />
     </type>
-
-    <type name="Magento\Payment\Model\MethodList">
-        <plugin sortOrder="5" name="pledgChangeSortOrder" type="Pledg\PledgPaymentGateway\Plugin\Model\Method\MethodAvailable" disabled="false" />
-    </type>
-
 </config>
