@@ -7,12 +7,14 @@ use Magento\Sales\Model\Order;
 /**
  * @package Pledg\PledgPaymentGateway\Controller\Checkout
  */
-class Success extends AbstractAction {
+class Success extends AbstractAction
+{
 
     /**
      * Execute Success order payment
      */
-    public function execute() {
+    public function execute()
+    {
         $pledgResult = $this->getRequest()->get("pledg_result");
 
         $pledg = json_decode($pledgResult);
@@ -23,18 +25,18 @@ class Success extends AbstractAction {
 
         //@Todo : Check signature
 
-        if(!$order) {
+        if (!$order) {
             $this->getLogger()->debug("Pledg returned an id for an order that could not be retrieved");
             $this->_redirect('checkout/onepage/error', array('_secure'=> false));
             return;
         }
 
-        if($order->getState() === Order::STATE_PROCESSING) {
+        if ($order->getState() === Order::STATE_PROCESSING) {
             $this->_redirect('checkout/onepage/success', array('_secure'=> false));
             return;
         }
 
-        if($order->getState() === Order::STATE_CANCELED) {
+        if ($order->getState() === Order::STATE_CANCELED) {
             $this->_redirect('checkout/onepage/failure', array('_secure'=> false));
             return;
         }
@@ -53,9 +55,9 @@ class Success extends AbstractAction {
                 ->setStatus($orderStatus)
                 ->addStatusHistoryComment("Pledg authorisation success. Transaction #$transactionId");
 
-	        $payment = $order->getPayment();
-	        $payment->setTransactionId($transactionId);
-	        $payment->addTransaction(\Magento\Sales\Model\Order\Payment\Transaction::TYPE_CAPTURE, null, true);
+            $payment = $order->getPayment();
+            $payment->setTransactionId($transactionId);
+            $payment->addTransaction(\Magento\Sales\Model\Order\Payment\Transaction::TYPE_CAPTURE, null, true);
             $order->save();
 
             $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
@@ -92,7 +94,9 @@ class Success extends AbstractAction {
             ->getResourceCollection()
             ->getData();
         foreach ($statuses as $status) {
-            if ($orderStatus === $status["status"]) return true;
+            if ($orderStatus === $status["status"]) {
+                return true;
+            }
         }
         return false;
     }
@@ -105,10 +109,10 @@ class Success extends AbstractAction {
      */
     private function invoiceOrder($order, $transactionId)
     {
-        if(!$order->canInvoice()){
-                throw new \Magento\Framework\Exception\LocalizedException(
-                    __('Cannot create an invoice.')
-                );
+        if (!$order->canInvoice()) {
+            throw new \Magento\Framework\Exception\LocalizedException(
+                __('Cannot create an invoice.')
+            );
         }
 
         $invoice = $this->getObjectManager()
@@ -117,8 +121,8 @@ class Success extends AbstractAction {
 
         if (!$invoice->getTotalQty()) {
             throw new \Magento\Framework\Exception\LocalizedException(
-                    __('You can\'t create an invoice without products.')
-                );
+                __('You can\'t create an invoice without products.')
+            );
         }
 
         /*
@@ -135,5 +139,4 @@ class Success extends AbstractAction {
             ->addObject($invoice->getOrder());
         $transaction->save();
     }
-
 }

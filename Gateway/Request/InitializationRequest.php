@@ -31,7 +31,8 @@ class InitializationRequest implements BuilderInterface
      * @param OrderAdapter $order
      * @return bool;
      */
-    private function validateQuote(OrderAdapterInterface $order) {
+    private function validateQuote(OrderAdapterInterface $order)
+    {
         $total = $order->getGrandTotalAmount();
         /*if($total < 20) {
             $this->_session->setPledgErrorMessage(__("Pledg doesn't support purchases less than $20."));
@@ -82,14 +83,14 @@ class InitializationRequest implements BuilderInterface
      * @param array $buildSubject
      * @return array
      */
-    public function build(array $buildSubject) {
-
+    public function build(array $buildSubject)
+    {
         $payment = $buildSubject['payment'];
         $stateObject = $buildSubject['stateObject'];
 
         $order = $payment->getOrder();
 
-        if($this->validateQuote($order)) {
+        if ($this->validateQuote($order)) {
             $stateObject->setState(Order::STATE_PENDING_PAYMENT);
             $stateObject->setStatus(Order::STATE_PENDING_PAYMENT);
             $stateObject->setIsNotified(false);

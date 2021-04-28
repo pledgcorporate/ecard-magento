@@ -8,7 +8,8 @@ use Magento\Sales\Model\Order;
 /**
  * @package Pledg\PledgPaymentGateway\Controller\Checkout
  */
-class Index extends AbstractAction {
+class Index extends AbstractAction
+{
 
     /**
      * Generate Payment URL
@@ -16,8 +17,9 @@ class Index extends AbstractAction {
      * @param $order
      * @return string
      */
-    private function getPayload($order) {
-        if($order == null) {
+    private function getPayload($order)
+    {
+        if ($order == null) {
             $this->getLogger()->debug('Unable to get order from last lodged order id. Possibly related to a failed database call');
             $this->_redirect('checkout/onepage/error', array('_secure'=> false));
         }
@@ -80,8 +82,8 @@ class Index extends AbstractAction {
      * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function execute() {
-
+    public function execute()
+    {
         $this->setCode($this->getRequest()->getParam('code'));
         $order = $this->getOrder();
 
@@ -91,7 +93,8 @@ class Index extends AbstractAction {
         }
 
         // Decode secret
-        $dataPledg = explode('#'.$this->getRequest()->getParam('code').'#',
+        $dataPledg = explode(
+            '#'.$this->getRequest()->getParam('code').'#',
             base64_decode($this->getRequest()->getParam('secret'))
         );
 
@@ -163,7 +166,9 @@ class Index extends AbstractAction {
             ->getResourceCollection()
             ->getData();
         foreach ($statuses as $status) {
-            if ($orderStatus === $status["status"]) return true;
+            if ($orderStatus === $status["status"]) {
+                return true;
+            }
         }
         return false;
     }
@@ -176,7 +181,7 @@ class Index extends AbstractAction {
      */
     private function invoiceOrder($order, $transactionId)
     {
-        if(!$order->canInvoice()){
+        if (!$order->canInvoice()) {
             throw new \Magento\Framework\Exception\LocalizedException(
                 __('Cannot create an invoice.')
             );
@@ -211,12 +216,13 @@ class Index extends AbstractAction {
      * @param string|string $message
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    private function errorOrder(string $message) {
+    private function errorOrder(string $message)
+    {
         $this
             ->getCheckoutHelper()
             ->cancelCurrentOrder(
-            "Order #".($this->getOrder()->getId())." $message."
-        );
+                "Order #".($this->getOrder()->getId())." $message."
+            );
         $this->getCheckoutHelper()->restoreQuote(); //restore cart
         $this->getMessageManager()->addErrorMessage(__($message));
         return $this->_redirect('checkout/cart', array('_secure'=> false));

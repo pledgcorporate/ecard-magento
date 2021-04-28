@@ -29,7 +29,7 @@ class PaymentMethodAvailable implements ObserverInterface
         /** @var Adapter $adapter */
         $adapter = $observer->getData('method_instance');
 
-        if (!in_array($adapter->getCode(), ConfigProvider::getPaymentMethodCodes())){
+        if (!in_array($adapter->getCode(), ConfigProvider::getPaymentMethodCodes())) {
             return;
         }
 
@@ -38,4 +38,3 @@ class PaymentMethodAvailable implements ObserverInterface
         }
     }
 }
-

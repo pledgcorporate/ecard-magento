@@ -5,12 +5,14 @@ namespace Pledg\PledgPaymentGateway\Controller\Checkout;
 /**
  * @package Pledg\PledgPaymentGateway\Controller\Checkout
  */
-class Cancel extends AbstractAction {
+class Cancel extends AbstractAction
+{
 
     /**
      * Execute Cancel action
      */
-    public function execute() {
+    public function execute()
+    {
         $orderId = $this->getRequest()->get('orderId');
         $order =  $this->getOrderById($orderId);
 
@@ -22,5 +24,4 @@ class Cancel extends AbstractAction {
         }
         $this->_redirect('checkout/cart');
     }
-
 }
