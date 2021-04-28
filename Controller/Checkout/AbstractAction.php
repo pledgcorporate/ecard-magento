@@ -20,7 +20,6 @@ use Magento\Sales\Model\OrderFactory;
 use Pledg\PledgPaymentGateway\Helper\Crypto;
 use Pledg\PledgPaymentGateway\Helper\Data;
 use Pledg\PledgPaymentGateway\Helper\Checkout;
-use Pledg\PledgPaymentGateway\Gateway\Config\Config;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -44,8 +43,6 @@ abstract class AbstractAction extends Action {
 
     private $_checkoutHelper;
 
-    private $_gatewayConfig;
-
     private $_messageManager;
 
     private $_logger;
@@ -59,7 +56,6 @@ abstract class AbstractAction extends Action {
     protected $_code;
 
     public function __construct(
-        Config $gatewayConfig,
         Session $checkoutSession,
         Context $context,
         OrderFactory $orderFactory,
@@ -77,7 +73,6 @@ abstract class AbstractAction extends Action {
         $this->_cryptoHelper = $cryptoHelper;
         $this->_dataHelper = $dataHelper;
         $this->_checkoutHelper = $checkoutHelper;
-        $this->_gatewayConfig = $gatewayConfig;
         $this->_messageManager = $context->getMessageManager();
         $this->_scopeConfig = $scopeConfig;
         $this->_logger = $logger;
@@ -107,10 +102,6 @@ abstract class AbstractAction extends Action {
 
     protected function getCheckoutHelper() {
         return $this->_checkoutHelper;
-    }
-
-    protected function getGatewayConfig() {
-        return $this->_gatewayConfig;
     }
 
     protected function getMessageManager() {
@@ -156,21 +147,16 @@ abstract class AbstractAction extends Action {
         return \Magento\Framework\App\ObjectManager::getInstance();
     }
 
-    protected function isPledgEnable()
-    {
-        return $this->_scopeConfig->getValue('payment/pledg_gateway/active');
-    }
-
     protected function isStaging()
     {
-        return $this->_scopeConfig->getValue('payment/pledg_gateway/staging');
+        return $this->_scopeConfig->getValue('pledg_gateway/payment/staging');
     }
 
     protected function getUrlPayment() {
         if ($this->isStaging()) {
-            $url = $this->_scopeConfig->getValue('payment/pledg_gateway/staging_url');
+            $url = $this->_scopeConfig->getValue('pledg_gateway/payment/staging_url');
         } else {
-            $url = $this->_scopeConfig->getValue('payment/pledg_gateway/gateway_url');
+            $url = $this->_scopeConfig->getValue('pledg_gateway/payment/gateway_url');
         }
 
         $url .= '?merchantUid=' . $this->getMerchantUid();

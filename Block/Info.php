@@ -9,12 +9,12 @@
 namespace Pledg\PledgPaymentGateway\Block;
 
 use Magento\Framework\Phrase;
-use Magento\Payment\Block\ConfigurableInfo;
+use Magento\Payment\Block\Info as BaseInfo;
 
 /**
  * Class Info
  */
-class Info extends ConfigurableInfo
+class Info extends BaseInfo
 {
     /**
      * Returns label

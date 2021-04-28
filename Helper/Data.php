@@ -11,7 +11,6 @@
 namespace Pledg\PledgPaymentGateway\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
-use Pledg\PledgPaymentGateway\Gateway\Config\Config;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\App\Helper\Context;
@@ -25,11 +24,6 @@ use Magento\Framework\Exception\NoSuchEntityException;
  * Provides helper methods for retrieving data for the pledg plugin
  */
 class Data extends AbstractHelper {
-
-    /**
-     * @var \Pledg\PledgPaymentGateway\Gateway\Config\Config
-     */
-    protected $_gatewayConfig;
     /**
      * @var \Magento\Framework\ObjectManagerInterface
      */
@@ -52,7 +46,6 @@ class Data extends AbstractHelper {
     protected $_localeResolver;
 
     /**
-     * @param \Pledg\PledgPaymentGateway\Gateway\Config\Config $gatewayConfig
      * @param \Magento\Framework\ObjectManagerInterface $objectManager
      * @param \Magento\Framework\App\Helper\Context $context
      * @param \Magento\Payment\Helper\Data $paymentData
@@ -60,14 +53,12 @@ class Data extends AbstractHelper {
      * @param \Magento\Framework\Locale\ResolverInterface $localeResolver
      */
     public function __construct(
-        Config $gatewayConfig,
         ObjectManagerInterface $objectManager,
         Context $context,
         PaymentData $paymentData,
         StoreManagerInterface $storeManager,
         ResolverInterface $localeResolver
     ) {
-        $this->_gatewayConfig = $gatewayConfig;
         $this->_objectManager = $objectManager;
         $this->_paymentData   = $paymentData;
         $this->_storeManager  = $storeManager;
@@ -88,10 +79,6 @@ class Data extends AbstractHelper {
         return $objectManager->create(
             get_class()
         );
-    }
-
-    protected function getGatewayConfig() {
-        return $this->_gatewayConfig;
     }
 
     /**
@@ -137,14 +124,6 @@ class Data extends AbstractHelper {
     protected function getLocaleResolver()
     {
         return $this->_localeResolver;
-    }
-
-    /**
-     * get the URL of the configured pledg gateway checkout
-     * @return string
-     */
-    public function getCheckoutUrl() {
-        return $this->getGatewayConfig()->getGatewayUrl();
     }
 
     /**

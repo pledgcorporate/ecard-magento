@@ -24,14 +24,12 @@ use Magento\Customer\Model\Session;
 use Magento\Backend\Model\Session\Quote;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\View\Asset\Repository;
-use Pledg\PledgPaymentGateway\Gateway\Config\Config;
 
 /**
  * Class ConfigProvider
  */
 final class ConfigProvider implements ConfigProviderInterface
 {
-    protected $_gatewayConfig;
     protected $_scopeConfigInterface;
     protected $customerSession;
     protected $_urlBuilder;
@@ -39,14 +37,12 @@ final class ConfigProvider implements ConfigProviderInterface
     protected $_assetRepo;
 
     public function __construct(
-    Config $gatewayConfig,
     Session $customerSession,
     Quote $sessionQuote,
     Context $context,
     Repository $assetRepo
     )
     {
-        $this->_gatewayConfig = $gatewayConfig;
         $this->_scopeConfigInterface = $context->getScopeConfig();
         $this->customerSession = $customerSession;
         $this->sessionQuote = $sessionQuote;
@@ -68,24 +64,8 @@ final class ConfigProvider implements ConfigProviderInterface
 
         $logoDef = $this->_assetRepo->getUrlWithParams('Pledg_PledgPaymentGateway::images/pledg_logo.png', $params);
 
-
-        $logoFile = $this->_gatewayConfig->getLogo();
-        if(strlen($logoFile) > 0){
-            $logo = '../pub/media/sales/store/logo/' . $logoFile;
-        }
-        else{
-            $logo = $logoDef;
-        }
-
         $config = [
             'payment' => [
-                Config::CODE => [
-                    'title' => $this->_gatewayConfig->getTitle(),
-                    'description' => $this->_gatewayConfig->getDescription(),
-                    'logo' => $logo,
-                    'staging' => $this->_scopeConfigInterface->getValue('payment/' . Config::CODE . '/staging'),
-                    //'allowed_countries' => $this->_gatewayConfig->getSpecificCountry(),
-                ],
                 Config1::CODE => [
                     'title' => $this->_scopeConfigInterface->getValue('payment/' . Config1::CODE . '/title'),
                     'description' => $this->_scopeConfigInterface->getValue('payment/' . Config1::CODE . '/description'),

@@ -127,17 +127,16 @@ class Index extends AbstractAction {
 
         $orderState = Order::STATE_PROCESSING;
 
-        $orderStatus = $this->getGatewayConfig()->getPledgApprovedOrderStatus();
+        // TODO default order status should be retrived on order payment method
+//        $orderStatus = $this->getGatewayConfig()->getPledgApprovedOrderStatus();
+        $orderStatus = 'processing';
         if (!$this->statusExists($orderStatus)) {
             $orderStatus = $order->getConfig()->getStateDefaultStatus($orderState);
         }
 
-        $emailCustomer = $this->getGatewayConfig()->isEmailCustomer();
-
         $order->setState($orderState)
             ->setStatus($orderStatus)
-            ->addStatusHistoryComment("Pledg authorisation success. Transaction #$transactionId")
-            ->setIsCustomerNotified($emailCustomer);
+            ->addStatusHistoryComment("Pledg authorisation success. Transaction #$transactionId");
 
         $payment = $order->getPayment();
         $payment->setTransactionId($transactionId);
@@ -148,7 +147,9 @@ class Index extends AbstractAction {
         $emailSender = $objectManager->create('\Magento\Sales\Model\Order\Email\Sender\OrderSender');
         $emailSender->send($order);
 
-        $invoiceAutomatically = $this->getGatewayConfig()->isAutomaticInvoice();
+        // TODO : confirm that invoice should be created automatically without configuration parameter
+//        $invoiceAutomatically = $this->getGatewayConfig()->isAutomaticInvoice();
+        $invoiceAutomatically = true;
         if ($invoiceAutomatically) {
             $this->invoiceOrder($order, $transactionId);
         }

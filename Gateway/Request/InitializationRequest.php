@@ -13,26 +13,21 @@ use Magento\Sales\Model\Order;
 use Magento\Payment\Gateway\Data\Order\OrderAdapter;
 use Magento\Payment\Gateway\Request\BuilderInterface;
 use Magento\Checkout\Model\Session;
-use Pledg\PledgPaymentGateway\Gateway\Config\Config;
 use Psr\Log\LoggerInterface;
 
 class InitializationRequest implements BuilderInterface
 {
     private $_logger;
     private $_session;
-    private $_gatewayConfig;
 
     /**
-     * @param Config $gatewayConfig
      * @param LoggerInterface $logger
      * @param Session $session
      */
     public function __construct(
-        Config $gatewayConfig,
         LoggerInterface $logger,
         Session $session
     ) {
-        $this->_gatewayConfig = $gatewayConfig;
         $this->_logger = $logger;
         $this->_session = $session;
     }
