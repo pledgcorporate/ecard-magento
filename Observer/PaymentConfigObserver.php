@@ -2,6 +2,7 @@
 
 namespace Pledg\PledgPaymentGateway\Observer;
 
+use Magento\Framework\App\Config\Storage\WriterInterface;
 use Magento\Framework\App\Request\Http;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Event\Observer as EventObserver;
@@ -21,15 +22,23 @@ class PaymentConfigObserver implements ObserverInterface
     private $messageManager;
 
     /**
+     * @var WriterInterface
+     */
+    private $configWriter;
+
+    /**
      * @param Http             $request
      * @param ManagerInterface $messageManager
+     * @param WriterInterface  $configWriter
      */
     public function __construct(
         Http $request,
-        ManagerInterface $messageManager
+        ManagerInterface $messageManager,
+        WriterInterface $configWriter
     ) {
         $this->request = $request;
         $this->messageManager = $messageManager;
+        $this->configWriter = $configWriter;
     }
 
     /**
@@ -47,7 +56,7 @@ class PaymentConfigObserver implements ObserverInterface
         foreach (ConfigProvider::getPaymentMethodCodes() as $paymentMethodCode) {
             if ($this->canProcessSection($postParams, $paymentMethodCode)) {
                 $fields = $groups[$paymentMethodCode]['fields'];
-                if (!empty($fields['active']['value'])) {
+                if (!empty($fields['active']['value']) && array_key_exists('api_key_mapping', $fields)) {
                     $countryMapping = $fields['api_key_mapping']['value'] ?? [];
                     $hasError = false;
                     $countries = [];
@@ -94,8 +103,8 @@ class PaymentConfigObserver implements ObserverInterface
                         continue;
                     }
 
-                    $groups[$paymentMethodCode]['fields']['allowspecific']['value'] = 1;
-                    $groups[$paymentMethodCode]['fields']['specificcountry']['value'] = implode(',', $countries);
+                    $this->configWriter->save(sprintf('payment/%s/allowspecific', $paymentMethodCode), 1);
+                    $this->configWriter->save(sprintf('payment/%s/specificcountry', $paymentMethodCode), implode(',', $countries));
                 }
             }
         }
