@@ -2,34 +2,10 @@
 
 namespace Pledg\PledgPaymentGateway\Block;
 
-use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\View\Element\Template;
 
 class Head extends Template
 {
-    /**
-     * @var \Magento\Framework\View\Asset\Repository
-     */
-    protected $assetRepository;
-
-    protected $_scopeConfig;
-
-    /**
-     * Header constructor.
-     * @param Template\Context $context
-     * @param array $data
-     */
-    public function __construct(
-        Template\Context $context,
-        ScopeConfigInterface $scopeConfig,
-        array $data = []
-    )
-    {
-        parent::__construct($context, $data);
-        $this->assetRepository = $context->getAssetRepository();
-        $this->_scopeConfig = $scopeConfig;
-    }
-
     /**
      * @return string
      */
