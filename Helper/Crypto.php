@@ -2,12 +2,6 @@
 
 namespace Pledg\PledgPaymentGateway\Helper;
 
-/**
- * Created by PhpStorm.
- * User: jimbur
- * Date: 27/10/2016
- * Time: 5:38 PM
- */
 class Crypto
 {
     /**
