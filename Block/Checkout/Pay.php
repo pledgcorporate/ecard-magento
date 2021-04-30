@@ -7,6 +7,7 @@ use Magento\Sales\Api\Data\OrderAddressInterface;
 use Magento\Sales\Model\Order;
 use Magento\Store\Model\ScopeInterface;
 use Pledg\PledgPaymentGateway\Helper\Config;
+use Pledg\PledgPaymentGateway\Helper\Crypto;
 
 class Pay extends Template
 {
@@ -16,6 +17,11 @@ class Pay extends Template
     private $configHelper;
 
     /**
+     * @var Crypto
+     */
+    private $crypto;
+
+    /**
      * @var Order
      */
     private $order;
@@ -23,16 +29,19 @@ class Pay extends Template
     /**
      * @param Template\Context $context
      * @param Config           $configHelper
+     * @param Crypto           $crypto
      * @param array            $data
      */
     public function __construct(
         Template\Context $context,
         Config $configHelper,
+        Crypto $crypto,
         array $data = []
     ) {
         parent::__construct($context, $data);
 
         $this->configHelper = $configHelper;
+        $this->crypto = $crypto;
     }
 
     /**
@@ -58,13 +67,22 @@ class Pay extends Template
             'countryCode' => $orderAddress->getCountryId(),
             'address' => $this->getAddressData($orderAddress),
             'metadata' => $this->getMetaData($order),
+            'showCloseButton' => true,
+            'paymentNotificationUrl' => $this->getUrl('pledg/checkout/ipn'),
         ];
 
         if (!$order->getIsVirtual()) {
             $pledgData['shipping_address'] = $this->getAddressData($order->getShippingAddress());
         }
 
-        return $this->encodeData($pledgData);
+        $secretKey = $order->getPayment()->getMethodInstance()->getConfigData('secret_key', $order->getStoreId());
+        if (empty($secretKey)) {
+            return $this->encodeData($pledgData);
+        }
+
+        return [
+            'signature' => $this->crypto->encode(['data' => $pledgData], $secretKey),
+        ];
     }
 
     /**

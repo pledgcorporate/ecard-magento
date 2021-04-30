@@ -34,6 +34,9 @@
                     <frontend_model>Pledg\PledgPaymentGateway\Block\System\Config\MerchantCountryMapping</frontend_model>
                     <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
                 </field>
+                <field id="secret_key" translate="label" type="text" sortOrder="55" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Secret key</label>
+                </field>
                 <field id="min_order_total" translate="label comment" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Montant minimum d'activation du moyen de paiement</label>
                     <comment>Indiqué ici le montant minimum de la commande pour activer ce moyen de paiement.</comment>
@@ -74,6 +77,9 @@
                     <label>Merchant UID mapping</label>
                     <frontend_model>Pledg\PledgPaymentGateway\Block\System\Config\MerchantCountryMapping</frontend_model>
                     <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                </field>
+                <field id="secret_key" translate="label" type="text" sortOrder="55" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Secret key</label>
                 </field>
                 <field id="min_order_total" translate="label comment" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Montant minimum d'activation du moyen de paiement</label>
@@ -116,6 +122,9 @@
                     <frontend_model>Pledg\PledgPaymentGateway\Block\System\Config\MerchantCountryMapping</frontend_model>
                     <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
                 </field>
+                <field id="secret_key" translate="label" type="text" sortOrder="55" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Secret key</label>
+                </field>
                 <field id="min_order_total" translate="label comment" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Montant minimum d'activation du moyen de paiement</label>
                     <comment>Indiqué ici le montant minimum de la commande pour activer ce moyen de paiement.</comment>
@@ -156,6 +165,9 @@
                     <label>Merchant UID mapping</label>
                     <frontend_model>Pledg\PledgPaymentGateway\Block\System\Config\MerchantCountryMapping</frontend_model>
                     <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                </field>
+                <field id="secret_key" translate="label" type="text" sortOrder="55" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Secret key</label>
                 </field>
                 <field id="min_order_total" translate="label comment" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Montant minimum d'activation du moyen de paiement</label>
@@ -198,6 +210,9 @@
                     <frontend_model>Pledg\PledgPaymentGateway\Block\System\Config\MerchantCountryMapping</frontend_model>
                     <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
                 </field>
+                <field id="secret_key" translate="label" type="text" sortOrder="55" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Secret key</label>
+                </field>
                 <field id="min_order_total" translate="label comment" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Montant minimum d'activation du moyen de paiement</label>
                     <comment>Indiqué ici le montant minimum de la commande pour activer ce moyen de paiement.</comment>
@@ -238,6 +253,9 @@
                     <label>Merchant UID mapping</label>
                     <frontend_model>Pledg\PledgPaymentGateway\Block\System\Config\MerchantCountryMapping</frontend_model>
                     <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                </field>
+                <field id="secret_key" translate="label" type="text" sortOrder="55" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Secret key</label>
                 </field>
                 <field id="min_order_total" translate="label comment" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Montant minimum d'activation du moyen de paiement</label>
@@ -280,6 +298,9 @@
                     <frontend_model>Pledg\PledgPaymentGateway\Block\System\Config\MerchantCountryMapping</frontend_model>
                     <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
                 </field>
+                <field id="secret_key" translate="label" type="text" sortOrder="55" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Secret key</label>
+                </field>
                 <field id="min_order_total" translate="label comment" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Montant minimum d'activation du moyen de paiement</label>
                     <comment>Indiqué ici le montant minimum de la commande pour activer ce moyen de paiement.</comment>
@@ -320,6 +341,9 @@
                     <label>Merchant UID mapping</label>
                     <frontend_model>Pledg\PledgPaymentGateway\Block\System\Config\MerchantCountryMapping</frontend_model>
                     <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                </field>
+                <field id="secret_key" translate="label" type="text" sortOrder="55" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Secret key</label>
                 </field>
                 <field id="min_order_total" translate="label comment" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Montant minimum d'activation du moyen de paiement</label>
@@ -362,6 +386,9 @@
                     <frontend_model>Pledg\PledgPaymentGateway\Block\System\Config\MerchantCountryMapping</frontend_model>
                     <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
                 </field>
+                <field id="secret_key" translate="label" type="text" sortOrder="55" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Secret key</label>
+                </field>
                 <field id="min_order_total" translate="label comment" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Montant minimum d'activation du moyen de paiement</label>
                     <comment>Indiqué ici le montant minimum de la commande pour activer ce moyen de paiement.</comment>
@@ -402,6 +429,9 @@
                     <label>Merchant UID mapping</label>
                     <frontend_model>Pledg\PledgPaymentGateway\Block\System\Config\MerchantCountryMapping</frontend_model>
                     <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                </field>
+                <field id="secret_key" translate="label" type="text" sortOrder="55" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Secret key</label>
                 </field>
                 <field id="min_order_total" translate="label comment" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Montant minimum d'activation du moyen de paiement</label>

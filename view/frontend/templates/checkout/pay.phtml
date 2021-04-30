@@ -12,7 +12,6 @@
         ...<?= json_encode($block->getPledgData()); ?>,
         ...{
             containerElement: document.querySelector('#container_pledg_form'),
-            showCloseButton: true,
             onSuccess: function () {
                 window.location.replace('<?php echo $this->getUrl('checkout/onepage/success'); ?>');
             },

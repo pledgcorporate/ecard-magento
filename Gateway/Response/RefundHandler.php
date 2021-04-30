@@ -15,11 +15,18 @@ class RefundHandler implements HandlerInterface
     private $logger;
 
     /**
-     * @param LoggerInterface $logger
+     * @var Crypto
      */
-    public function __construct(LoggerInterface $logger)
+    private $crypto;
+
+    /**
+     * @param LoggerInterface $logger
+     * @param Crypto          $crypto
+     */
+    public function __construct(LoggerInterface $logger, Crypto $crypto)
     {
         $this->logger = $logger;
+        $this->crypto = $crypto;
     }
 
     /**
@@ -52,7 +59,7 @@ class RefundHandler implements HandlerInterface
             "x_reason" => "Refund"
         );
 
-        $refund_signature = Crypto::generateSignature($refund_details, $apiKey);
+        $refund_signature = $this->crypto->encode($refund_details, $apiKey);
         $refund_details['signature'] = $refund_signature;
 
         $json = json_encode($refund_details);
