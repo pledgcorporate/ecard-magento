@@ -3,43 +3,26 @@
  * @var \Pledg\PledgPaymentGateway\Block\Checkout\Pay $block
  */
 ?>
-<table>
-<?php foreach ($block->getPledgData() as $key => $value) : ?>
-    <?php if (is_array($value)) : ?>
-        <?php foreach ($value as $valueKey => $valueValue) : ?>
-            <tr>
-                <td><?php echo $key . '.' . $valueKey; ?></td>
-                <td><?php echo $valueValue; ?></td>
-            </tr>
-        <?php endforeach; ?>
-    <?php else : ?>
-        <tr>
-            <td><?php echo $key; ?></td>
-            <td><?php echo $value; ?></td>
-        </tr>
-    <?php endif; ?>
-<?php endforeach; ?>
-</table>
-
-<div id="container_pledg_form" style="min-height: 200px"></div>
+<div id="container_pledg_form"></div>
 <button id="trigger_pledg_form" style="display: none;"></button>
 <script>
-    (function() {
-        let pledgData = <?= json_encode($block->getPledgData()); ?>;
-        let button = document.querySelector("#trigger_pledg_form");
+    let button = document.querySelector("#trigger_pledg_form");
 
-        new Pledg(button, {
-            ...pledgData,
-            ...{
-                containerElement: document.querySelector('#container_pledg_form'),
-                showCloseButton: false,
-                onSuccess: function (result) {
-                    console.log(result);
-                },
-                onError: function (error) {
-                    console.log(error);
-                }
-            }
-        });
-    })();
+    new Pledg(button, {
+        ...<?= json_encode($block->getPledgData()); ?>,
+        ...{
+            containerElement: document.querySelector('#container_pledg_form'),
+            showCloseButton: true,
+            onSuccess: function (result) {
+                window.location.replace('<?php echo $this->getUrl('checkout/onepage/success'); ?>');
+            },
+            onError: function (error) {
+                console.log(error);
+            },
+            onCancel: function (error) {
+                console.log(error);
+            },
+        }
+    });
+    button.click();
 </script>

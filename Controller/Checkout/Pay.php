@@ -5,10 +5,10 @@ namespace Pledg\PledgPaymentGateway\Controller\Checkout;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
-use Magento\Framework\Registry;
 use Magento\Framework\View\Result\PageFactory;
 use Magento\Sales\Model\Order;
 use Magento\Sales\Model\OrderFactory;
+use Pledg\PledgPaymentGateway\Helper\Config;
 use Pledg\PledgPaymentGateway\Model\Ui\ConfigProvider;
 use Psr\Log\LoggerInterface;
 
@@ -30,9 +30,9 @@ class Pay extends Action
     private $pageFactory;
 
     /**
-     * @var Registry
+     * @var Config
      */
-    private $registry;
+    private $configHelper;
 
     /**
      * @var LoggerInterface
@@ -44,7 +44,7 @@ class Pay extends Action
      * @param Session         $checkoutSession
      * @param OrderFactory    $orderFactory
      * @param PageFactory     $pageFactory
-     * @param Registry        $registry
+     * @param Config          $configHelper
      * @param LoggerInterface $logger
      */
     public function __construct(
@@ -52,7 +52,7 @@ class Pay extends Action
         Session $checkoutSession,
         OrderFactory $orderFactory,
         PageFactory $pageFactory,
-        Registry $registry,
+        Config $configHelper,
         LoggerInterface $logger
     ) {
         parent::__construct($context);
@@ -60,7 +60,7 @@ class Pay extends Action
         $this->checkoutSession = $checkoutSession;
         $this->orderFactory = $orderFactory;
         $this->pageFactory = $pageFactory;
-        $this->registry = $registry;
+        $this->configHelper = $configHelper;
         $this->logger = $logger;
     }
 
@@ -81,15 +81,7 @@ class Pay extends Action
                 throw new \Exception(sprintf('Order with state %s wrongfully accessed Pledg payment page', $order->getState()));
             }
 
-            $apiKeyMapping = $order->getPayment()->getMethodInstance()->getConfigData('api_key_mapping', $order->getStoreId());
-            $apiKeyMapping = json_decode($apiKeyMapping, true);
-            $merchantApiKey = null;
-            foreach ($apiKeyMapping as $mapping) {
-                if ($mapping['country'] === $order->getBillingAddress()->getCountryId()) {
-                    $merchantApiKey = $mapping['api_key'];
-                }
-            }
-
+            $merchantApiKey = $this->configHelper->getMerchantIdForOrder($order);
             if ($merchantApiKey === null) {
                 throw new \Exception(sprintf(
                     'Could not retrieve api key for country %s on order %s',
@@ -98,10 +90,7 @@ class Pay extends Action
                 ));
             }
 
-            $this->registry->register('pledg_order', $order);
-            $this->registry->register('pledg_merchant_id', $merchantApiKey);
-
-            $title = __('Pay with Pledg');
+            $title = __('Pay your order #%1 with Pledg', $order->getIncrementId());
             $page = $this->pageFactory->create();
             $page->getConfig()->getTitle()->set($title);
 
@@ -109,6 +98,8 @@ class Pay extends Action
             if ($pageMainTitle) {
                 $pageMainTitle->setPageTitle($title);
             }
+
+            $page->getLayout()->getBlock('pledg_payment_gateway_checkout_pay')->setOrder($order);
 
             return $page;
         } catch (\Exception $e) {
