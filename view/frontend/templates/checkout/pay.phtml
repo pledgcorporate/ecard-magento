@@ -13,14 +13,14 @@
         ...{
             containerElement: document.querySelector('#container_pledg_form'),
             showCloseButton: true,
-            onSuccess: function (result) {
+            onSuccess: function () {
                 window.location.replace('<?php echo $this->getUrl('checkout/onepage/success'); ?>');
             },
             onError: function (error) {
-                console.log(error);
+                window.location.replace('<?php echo $this->getUrl('pledg/checkout/cancel');?>' + '?pledg_error=' + encodeURI(error.message));
             },
-            onCancel: function (error) {
-                console.log(error);
+            onCancel: function () {
+                window.location.replace('<?php echo $this->getUrl('pledg/checkout/cancel');?>');
             },
         }
     });
