@@ -11,6 +11,7 @@ use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Data\Form\FormKey;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Sales\Model\Order;
+use Magento\Sales\Model\Order\Email\Sender\OrderSender;
 use Magento\Sales\Model\OrderFactory;
 use Magento\Store\Model\ScopeInterface;
 use Pledg\PledgPaymentGateway\Helper\Config;
@@ -62,6 +63,11 @@ class Ipn extends Action
     private $scopeConfig;
 
     /**
+     * @var OrderSender
+     */
+    private $orderSender;
+
+    /**
      * @var LoggerInterface
      */
     private $logger;
@@ -72,6 +78,7 @@ class Ipn extends Action
      * @param OrderFactory         $orderFactory
      * @param Crypto               $cryptoHelper
      * @param ScopeConfigInterface $scopeConfig
+     * @param OrderSender          $orderSender
      * @param LoggerInterface      $logger
      */
     public function __construct(
@@ -80,6 +87,7 @@ class Ipn extends Action
         OrderFactory $orderFactory,
         Crypto $cryptoHelper,
         ScopeConfigInterface $scopeConfig,
+        OrderSender $orderSender,
         LoggerInterface $logger
     ) {
         parent::__construct($context);
@@ -87,6 +95,7 @@ class Ipn extends Action
         $this->orderFactory = $orderFactory;
         $this->cryptoHelper = $cryptoHelper;
         $this->scopeConfig = $scopeConfig;
+        $this->orderSender = $orderSender;
         $this->logger = $logger;
 
         $this->getRequest()->setParam('form_key', $formKey->getFormKey());
@@ -236,5 +245,11 @@ class Ipn extends Action
             $order->getConfig()->getStateDefaultStatus(Order::STATE_PROCESSING),
             $message
         );
+
+        try {
+            $this->orderSender->send($order);
+        } catch (\Exception $e) {
+            $this->logger->error($e->getMessage());
+        }
     }
 }
