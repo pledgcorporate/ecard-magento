@@ -2,8 +2,6 @@
 
 namespace Pledg\PledgPaymentGateway\Gateway\Config;
 
-use Magento\Payment\Gateway\Config\Config;
-
 class Config4 extends Config
 {
     const CODE = 'pledg_gateway_4';
