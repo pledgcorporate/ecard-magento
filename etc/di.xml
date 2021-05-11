@@ -8,7 +8,6 @@
             <argument name="infoBlockType" xsi:type="string">Pledg\PledgPaymentGateway\Block\Info</argument>
             <argument name="valueHandlerPool" xsi:type="object">Pledg1PaymentGatewayValueHandlerPool</argument>
             <argument name="validatorPool" xsi:type="object">Pledg1PaymentGatewayValidatorPool</argument>
-            <argument name="commandPool" xsi:type="object">PledgPaymentGatewayCommandPool</argument>
         </arguments>
     </virtualType>
     <virtualType name="Pledg2PaymentGatewayFacade" type="Magento\Payment\Model\Method\Adapter">
@@ -18,7 +17,6 @@
             <argument name="infoBlockType" xsi:type="string">Pledg\PledgPaymentGateway\Block\Info</argument>
             <argument name="valueHandlerPool" xsi:type="object">Pledg2PaymentGatewayValueHandlerPool</argument>
             <argument name="validatorPool" xsi:type="object">Pledg2PaymentGatewayValidatorPool</argument>
-            <argument name="commandPool" xsi:type="object">PledgPaymentGatewayCommandPool</argument>
         </arguments>
     </virtualType>
     <virtualType name="Pledg3PaymentGatewayFacade" type="Magento\Payment\Model\Method\Adapter">
@@ -28,7 +26,6 @@
             <argument name="infoBlockType" xsi:type="string">Pledg\PledgPaymentGateway\Block\Info</argument>
             <argument name="valueHandlerPool" xsi:type="object">Pledg3PaymentGatewayValueHandlerPool</argument>
             <argument name="validatorPool" xsi:type="object">Pledg3PaymentGatewayValidatorPool</argument>
-            <argument name="commandPool" xsi:type="object">PledgPaymentGatewayCommandPool</argument>
         </arguments>
     </virtualType>
     <virtualType name="Pledg4PaymentGatewayFacade" type="Magento\Payment\Model\Method\Adapter">
@@ -38,7 +35,6 @@
             <argument name="infoBlockType" xsi:type="string">Pledg\PledgPaymentGateway\Block\Info</argument>
             <argument name="valueHandlerPool" xsi:type="object">Pledg4PaymentGatewayValueHandlerPool</argument>
             <argument name="validatorPool" xsi:type="object">Pledg4PaymentGatewayValidatorPool</argument>
-            <argument name="commandPool" xsi:type="object">PledgPaymentGatewayCommandPool</argument>
         </arguments>
     </virtualType>
     <virtualType name="Pledg5PaymentGatewayFacade" type="Magento\Payment\Model\Method\Adapter">
@@ -48,7 +44,6 @@
             <argument name="infoBlockType" xsi:type="string">Pledg\PledgPaymentGateway\Block\Info</argument>
             <argument name="valueHandlerPool" xsi:type="object">Pledg5PaymentGatewayValueHandlerPool</argument>
             <argument name="validatorPool" xsi:type="object">Pledg5PaymentGatewayValidatorPool</argument>
-            <argument name="commandPool" xsi:type="object">PledgPaymentGatewayCommandPool</argument>
         </arguments>
     </virtualType>
     <virtualType name="Pledg6PaymentGatewayFacade" type="Magento\Payment\Model\Method\Adapter">
@@ -58,7 +53,6 @@
             <argument name="infoBlockType" xsi:type="string">Pledg\PledgPaymentGateway\Block\Info</argument>
             <argument name="valueHandlerPool" xsi:type="object">Pledg6PaymentGatewayValueHandlerPool</argument>
             <argument name="validatorPool" xsi:type="object">Pledg6PaymentGatewayValidatorPool</argument>
-            <argument name="commandPool" xsi:type="object">PledgPaymentGatewayCommandPool</argument>
         </arguments>
     </virtualType>
     <virtualType name="Pledg7PaymentGatewayFacade" type="Magento\Payment\Model\Method\Adapter">
@@ -68,7 +62,6 @@
             <argument name="infoBlockType" xsi:type="string">Pledg\PledgPaymentGateway\Block\Info</argument>
             <argument name="valueHandlerPool" xsi:type="object">Pledg7PaymentGatewayValueHandlerPool</argument>
             <argument name="validatorPool" xsi:type="object">Pledg7PaymentGatewayValidatorPool</argument>
-            <argument name="commandPool" xsi:type="object">PledgPaymentGatewayCommandPool</argument>
         </arguments>
     </virtualType>
     <virtualType name="Pledg8PaymentGatewayFacade" type="Magento\Payment\Model\Method\Adapter">
@@ -78,7 +71,6 @@
             <argument name="infoBlockType" xsi:type="string">Pledg\PledgPaymentGateway\Block\Info</argument>
             <argument name="valueHandlerPool" xsi:type="object">Pledg8PaymentGatewayValueHandlerPool</argument>
             <argument name="validatorPool" xsi:type="object">Pledg8PaymentGatewayValidatorPool</argument>
-            <argument name="commandPool" xsi:type="object">PledgPaymentGatewayCommandPool</argument>
         </arguments>
     </virtualType>
     <virtualType name="Pledg9PaymentGatewayFacade" type="Magento\Payment\Model\Method\Adapter">
@@ -88,7 +80,6 @@
             <argument name="infoBlockType" xsi:type="string">Pledg\PledgPaymentGateway\Block\Info</argument>
             <argument name="valueHandlerPool" xsi:type="object">Pledg9PaymentGatewayValueHandlerPool</argument>
             <argument name="validatorPool" xsi:type="object">Pledg9PaymentGatewayValidatorPool</argument>
-            <argument name="commandPool" xsi:type="object">PledgPaymentGatewayCommandPool</argument>
         </arguments>
     </virtualType>
     <virtualType name="Pledg10PaymentGatewayFacade" type="Magento\Payment\Model\Method\Adapter">
@@ -98,7 +89,6 @@
             <argument name="infoBlockType" xsi:type="string">Pledg\PledgPaymentGateway\Block\Info</argument>
             <argument name="valueHandlerPool" xsi:type="object">Pledg10PaymentGatewayValueHandlerPool</argument>
             <argument name="validatorPool" xsi:type="object">Pledg10PaymentGatewayValidatorPool</argument>
-            <argument name="commandPool" xsi:type="object">PledgPaymentGatewayCommandPool</argument>
         </arguments>
     </virtualType>
 
@@ -153,53 +143,6 @@
             <argument name="methodCode" xsi:type="const">Pledg\PledgPaymentGateway\Gateway\Config\Config10::CODE</argument>
         </arguments>
     </type>
-
-    <!-- Commands infrastructure -->
-    <virtualType name="PledgPaymentGatewayCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
-        <arguments>
-            <argument name="commands" xsi:type="array">
-                <item name="initialize" xsi:type="string">PledgPaymentGatewayInitializeCommand</item>
-                <item name="refund" xsi:type="string">PledgPaymentGatewayRefundCommand</item>
-            </argument>
-        </arguments>
-    </virtualType>
-
-    <!-- Initialize command -->
-    <virtualType name="PledgPaymentGatewayInitializeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
-        <arguments>
-            <argument name="requestBuilder" xsi:type="object">PledgPaymentGatewayInitializationRequest</argument>
-            <argument name="transferFactory" xsi:type="object">Pledg\PledgPaymentGateway\Gateway\Http\DummyTransferFactory</argument> <!-- [Payment/Model/Method/Adapter][executeCommand]ERROR!Cannot instantiate interface Magento\Payment\Gateway\Http\TransferFactoryInterface if empty -->
-            <argument name="client" xsi:type="object">Pledg\PledgPaymentGateway\Gateway\Http\Client\DummyClient</argument> <!-- [Payment/Model/Method/Adapter][executeCommand]ERROR getting command!Cannot instantiate interface Magento\Payment\Gateway\Http\ClientInterface if empty-->
-        </arguments>
-    </virtualType>
-
-    <!-- Refund command -->
-    <virtualType name="PledgPaymentGatewayRefundCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
-        <arguments>
-            <argument name="requestBuilder" xsi:type="object">PledgPaymentGatewayRefundRequest</argument>
-            <argument name="transferFactory" xsi:type="object">Pledg\PledgPaymentGateway\Gateway\Http\DummyTransferFactory</argument> <!-- [Payment/Model/Method/Adapter][executeCommand]ERROR!Cannot instantiate interface Magento\Payment\Gateway\Http\TransferFactoryInterface if empty -->
-            <argument name="handler" xsi:type="object">Pledg\PledgPaymentGateway\Gateway\Response\RefundHandler</argument>
-            <argument name="client" xsi:type="object">Pledg\PledgPaymentGateway\Gateway\Http\Client\RefundClient</argument> <!-- [Payment/Model/Method/Adapter][executeCommand]ERROR getting command!Cannot instantiate interface Magento\Payment\Gateway\Http\ClientInterface if empty-->
-        </arguments>
-    </virtualType>
-
-    <!-- Initialization Request -->
-    <virtualType name="PledgPaymentGatewayInitializationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
-        <arguments>
-            <argument name="builders" xsi:type="array">
-                <item name="transaction" xsi:type="string">Pledg\PledgPaymentGateway\Gateway\Request\InitializationRequest</item>
-            </argument>
-        </arguments>
-    </virtualType>
-
-    <!-- Refund Request -->
-    <virtualType name="PledgPaymentGatewayRefundRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
-        <arguments>
-            <argument name="builders" xsi:type="array">
-                <item name="transaction" xsi:type="string">Pledg\PledgPaymentGateway\Gateway\Request\RefundRequest</item>
-            </argument>
-        </arguments>
-    </virtualType>
 
     <!-- Value handlers infrastructure -->
     <virtualType name="Pledg1PaymentGatewayValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">

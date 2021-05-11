@@ -4,6 +4,7 @@ namespace Pledg\PledgPaymentGateway\Controller\Checkout;
 
 use Magento\Checkout\Model\Session;
 use Magento\Framework\App\Action\Context;
+use Magento\Sales\Model\Order;
 use Magento\Sales\Model\OrderFactory;
 use Psr\Log\LoggerInterface;
 
@@ -37,7 +38,7 @@ class Cancel extends CheckoutAction
     public function execute()
     {
         try {
-            $order = $this->getLastOrder();
+            $order = $this->getLastOrder([Order::STATE_NEW, Order::STATE_PENDING_PAYMENT]);
 
             $comment = __('Payment has been cancelled by customer');
             $errorMessage = $this->_request->getParam('pledg_error');
