@@ -3,27 +3,14 @@
 namespace Pledg\PledgPaymentGateway\Controller\Checkout;
 
 use Magento\Checkout\Model\Session;
-use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\View\Result\PageFactory;
-use Magento\Sales\Model\Order;
 use Magento\Sales\Model\OrderFactory;
 use Pledg\PledgPaymentGateway\Helper\Config;
-use Pledg\PledgPaymentGateway\Model\Ui\ConfigProvider;
 use Psr\Log\LoggerInterface;
 
-class Pay extends Action
+class Pay extends CheckoutAction
 {
-    /**
-     * @var Session
-     */
-    private $checkoutSession;
-
-    /**
-     * @var OrderFactory
-     */
-    private $orderFactory;
-
     /**
      * @var PageFactory
      */
@@ -55,10 +42,8 @@ class Pay extends Action
         Config $configHelper,
         LoggerInterface $logger
     ) {
-        parent::__construct($context);
+        parent::__construct($context, $checkoutSession, $orderFactory);
 
-        $this->checkoutSession = $checkoutSession;
-        $this->orderFactory = $orderFactory;
         $this->pageFactory = $pageFactory;
         $this->configHelper = $configHelper;
         $this->logger = $logger;
@@ -71,15 +56,6 @@ class Pay extends Action
     {
         try {
             $order = $this->getLastOrder();
-            $paymentMethod = $order->getPayment()->getMethod();
-
-            if (!in_array($paymentMethod, ConfigProvider::getPaymentMethodCodes())) {
-                throw new \Exception(sprintf('Order with method %s wrongfully accessed Pledg payment page', $paymentMethod));
-            }
-
-            if ($order->getState() !== Order::STATE_PENDING_PAYMENT) {
-                throw new \Exception(sprintf('Order with state %s wrongfully accessed Pledg payment page', $order->getState()));
-            }
 
             $merchantApiKey = $this->configHelper->getMerchantIdForOrder($order);
             if ($merchantApiKey === null) {
@@ -113,27 +89,5 @@ class Pay extends Action
 
             return $this->resultRedirectFactory->create()->setPath('checkout/cart');
         }
-    }
-
-    /**
-     * @return Order
-     *
-     * @throws \Exception
-     */
-    private function getLastOrder()
-    {
-        $lastIncrementId = $this->checkoutSession->getLastRealOrderId();
-
-        if (!$lastIncrementId) {
-            throw new \Exception('Could not retrieve last order id');
-        }
-        $order = $this->orderFactory->create();
-        $order->loadByIncrementId($lastIncrementId);
-
-        if (!$order->getId()) {
-            throw new \Exception(sprintf('Could not retrieve order with id %s', $lastIncrementId));
-        }
-
-        return $order;
     }
 }
