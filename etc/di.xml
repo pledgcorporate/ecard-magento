@@ -387,4 +387,33 @@
             </argument>
         </arguments>
     </virtualType>
+
+    <virtualType name="PledgLoggerHandler" type="Magento\Framework\Logger\Handler\Base">
+        <arguments>
+            <argument name="fileName" xsi:type="string">/var/log/pledg_payment_gateway.log</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="PledgLogger" type="Monolog\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">pledg</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="system" xsi:type="object">PledgLoggerHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Pledg\PledgPaymentGateway\Controller\Checkout\Cancel">
+        <arguments>
+            <argument name="logger" xsi:type="object">PledgLogger</argument>
+        </arguments>
+    </type>
+    <type name="Pledg\PledgPaymentGateway\Controller\Checkout\Ipn">
+        <arguments>
+            <argument name="logger" xsi:type="object">PledgLogger</argument>
+        </arguments>
+    </type>
+    <type name="Pledg\PledgPaymentGateway\Controller\Checkout\Pay">
+        <arguments>
+            <argument name="logger" xsi:type="object">PledgLogger</argument>
+        </arguments>
+    </type>
 </config>
