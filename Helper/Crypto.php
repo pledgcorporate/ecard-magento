@@ -16,4 +16,15 @@ class Crypto
     {
         return JWT::encode($payload, $secretKey);
     }
+
+    /**
+     * @param string $signature
+     * @param string $secretKey
+     *
+     * @return array
+     */
+    public function decode(string $signature, string $secretKey): array
+    {
+        return (array)JWT::decode($signature, $secretKey, ['HS256']);
+    }
 }

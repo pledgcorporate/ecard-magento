@@ -59,7 +59,7 @@ class Pay extends Template
             'amountCents' => round($order->getGrandTotal() * 100),
             'email' => $order->getCustomerEmail(),
             'title' => 'Order ' . $orderIncrementId,
-            'reference' => 'order_' . $orderIncrementId,
+            'reference' => Config::ORDER_REFERENCE_PREFIX . $orderIncrementId,
             'firstName' => $orderAddress->getFirstname(),
             'lastName' => $orderAddress->getLastname(),
             'currency' => $order->getOrderCurrencyCode(),
@@ -68,7 +68,11 @@ class Pay extends Template
             'address' => $this->getAddressData($orderAddress),
             'metadata' => $this->getMetaData($order),
             'showCloseButton' => true,
-            'paymentNotificationUrl' => $this->getUrl('pledg/checkout/ipn'),
+            'paymentNotificationUrl' => $this->getUrl('pledg/checkout/ipn', [
+                '_secure' => true,
+                'ipn_store_id' => $order->getStoreId(),
+                'pledg_method' => $order->getPayment()->getMethod(),
+            ]),
         ];
 
         if (!$order->getIsVirtual()) {

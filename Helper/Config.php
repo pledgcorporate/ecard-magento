@@ -10,6 +10,7 @@ use Magento\Sales\Model\Order;
 class Config extends AbstractHelper
 {
     const MODULE_VERSION = '1.0.3';
+    const ORDER_REFERENCE_PREFIX = 'order_';
 
     /**
      * @var ProductMetadataInterface
