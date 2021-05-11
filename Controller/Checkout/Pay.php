@@ -5,6 +5,7 @@ namespace Pledg\PledgPaymentGateway\Controller\Checkout;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\View\Result\PageFactory;
+use Magento\Sales\Model\Order;
 use Magento\Sales\Model\OrderFactory;
 use Pledg\PledgPaymentGateway\Helper\Config;
 use Psr\Log\LoggerInterface;
@@ -55,7 +56,7 @@ class Pay extends CheckoutAction
     public function execute()
     {
         try {
-            $order = $this->getLastOrder();
+            $order = $this->getLastOrder([Order::STATE_NEW]);
 
             $merchantApiKey = $this->configHelper->getMerchantIdForOrder($order);
             if ($merchantApiKey === null) {
@@ -65,6 +66,13 @@ class Pay extends CheckoutAction
                     $order->getIncrementId()
                 ));
             }
+
+            $order->setState(Order::STATE_PENDING_PAYMENT);
+            $order->addStatusToHistory(
+                $order->getConfig()->getStateDefaultStatus(Order::STATE_PENDING_PAYMENT),
+                __('Customer accessed payment page')
+            );
+            $order->save();
 
             $title = __('Pay your order #%1 with Pledg', $order->getIncrementId());
             $page = $this->pageFactory->create();

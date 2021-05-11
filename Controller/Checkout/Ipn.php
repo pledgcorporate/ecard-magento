@@ -113,6 +113,9 @@ class Ipn extends Action
 
         $this->logger->info('Received IPN', ['params' => $params]);
 
+        $success = true;
+        $responseCode = 200;
+        $message = '';
         try {
             if (isset($params['signature'])) {
                 if (count($params) === 1) {
@@ -166,17 +169,22 @@ class Ipn extends Action
             }
 
             $message = null;
+            $transactionId = null;
+            $pledgStatus = null;
             if ($mode === self::MODE_TRANSFER) {
                 // In tranfer mode, notification is only sent when payment is validated
                 $this->logger->info('Invoice order after receiving transfer notification');
-                $this->invoiceOrder($order, $params['purchase_uid'] ?? '');
+                $transactionId = $params['purchase_uid'] ?? '';
+                $pledgStatus = 'completed';
+                $this->invoiceOrder($order, $transactionId);
                 $message = __('Received invoicing order from Pledg transfer notification');
             } else {
                 $pledgStatus = $params['status'] ?? '';
+                $transactionId = $params['id'] ?? '';
                 $this->logger->info('Payment status received with back mode : ' . $pledgStatus);
                 if (in_array($pledgStatus, self::STATUS_COMPLETED)) {
                     $this->logger->info('Invoice order after receiving back notification');
-                    $this->invoiceOrder($order, $params['id'] ?? '');
+                    $this->invoiceOrder($order, $transactionId);
                     $message = __('Received invoicing order from Pledg back notification with status %1', $pledgStatus);
                 } elseif (in_array($pledgStatus, self::STATUS_CANCELLED)) {
                     $this->logger->info('Cancel order after receiving back notification');
@@ -195,28 +203,32 @@ class Ipn extends Action
                 }
             }
 
+            $paymentData = $order->getPayment()->getAdditionalInformation();
+            $paymentData['transaction_id'] = $transactionId;
+            $paymentData['pledg_mode'] = $mode;
+            $paymentData['pledg_status'] = $pledgStatus;
+            $order->getPayment()->setAdditionalInformation($paymentData)->save();
+
             if ($message !== null) {
                 $order->addCommentToStatusHistory($message);
                 $order->save();
             }
-
-            /** @var Raw $response */
-            $response = $this->resultFactory->create(ResultFactory::TYPE_RAW);
-            $response->setContents('');
-
-            return $response;
         } catch (\Exception $e) {
             $this->logger->error('An error occurred while processing IPN', [
                 'exception' => $e,
             ]);
 
-            /** @var Json $response */
-            $response = $this->resultFactory->create(ResultFactory::TYPE_JSON);
-            $response->setHttpResponseCode(500);
-            $response->setData(['exception' => $e->getMessage()]);
-
-            return $response;
+            $success = false;
+            $responseCode = 500;
+            $message = $e->getMessage();
         }
+
+        /** @var Json $response */
+        $response = $this->resultFactory->create(ResultFactory::TYPE_JSON);
+        $response->setHttpResponseCode($responseCode);
+        $response->setData(['success' => $success, 'message' => $message]);
+
+        return $response;
     }
 
     /**

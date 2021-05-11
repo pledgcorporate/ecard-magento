@@ -38,11 +38,13 @@ abstract class CheckoutAction extends Action
     }
 
     /**
+     * @param array $validStates
+     *
      * @return Order
      *
      * @throws \Exception
      */
-    protected function getLastOrder(): Order
+    protected function getLastOrder(array $validStates): Order
     {
         $lastIncrementId = $this->checkoutSession->getLastRealOrderId();
 
@@ -62,7 +64,7 @@ abstract class CheckoutAction extends Action
             throw new \Exception(sprintf('Order with method %s wrongfully accessed Pledg page', $paymentMethod));
         }
 
-        if ($order->getState() !== Order::STATE_PENDING_PAYMENT) {
+        if (!in_array($order->getState(), $validStates)) {
             throw new \Exception(sprintf('Order with state %s wrongfully accessed Pledg page', $order->getState()));
         }
 
