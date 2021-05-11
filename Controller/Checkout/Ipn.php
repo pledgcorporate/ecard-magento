@@ -10,6 +10,7 @@ use Magento\Framework\Controller\Result\Raw;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Data\Form\FormKey;
 use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Phrase;
 use Magento\Sales\Model\Order;
 use Magento\Sales\Model\Order\Email\Sender\OrderSender;
 use Magento\Sales\Model\OrderFactory;
@@ -125,7 +126,7 @@ class Ipn extends Action
                     $params = $this->cryptoHelper->decode($signature, $secretKey);
                     $this->logger->info('Decrypted message', ['params' => $params]);
 
-                    $mode = self::MODE_TRANSFER;
+                    $this->handleTransferMode($params);
                 } else {
                     $this->logger->info('Mode signed back');
 
@@ -147,71 +148,12 @@ class Ipn extends Action
                     if ($params['signature'] !== $stringToValidate) {
                         throw new \Exception('Invalid signature');
                     }
-                    $mode = self::MODE_BACK;
+
+                    $this->handleBackMode($params);
                 }
             } else {
                 $this->logger->info('Mode unsigned transfer');
-                $mode = self::MODE_TRANSFER;
-            }
-
-            $orderIncrementId = str_replace(Config::ORDER_REFERENCE_PREFIX, '', $params['reference']);
-            $order = $this->orderFactory->create();
-            $order->loadByIncrementId($orderIncrementId);
-
-            if (!$order->getId()) {
-                throw new \Exception(sprintf('Could not retrieve order with id %s', $orderIncrementId));
-            }
-
-            $paymentMethod = $order->getPayment()->getMethod();
-
-            if (!in_array($paymentMethod, ConfigProvider::getPaymentMethodCodes())) {
-                throw new \Exception(sprintf('Order with method %s should not be updated via Pledg notification', $paymentMethod));
-            }
-
-            $message = null;
-            $transactionId = null;
-            $pledgStatus = null;
-            if ($mode === self::MODE_TRANSFER) {
-                // In tranfer mode, notification is only sent when payment is validated
-                $this->logger->info('Invoice order after receiving transfer notification');
-                $transactionId = $params['purchase_uid'] ?? '';
-                $pledgStatus = 'completed';
-                $this->invoiceOrder($order, $transactionId);
-                $message = __('Received invoicing order from Pledg transfer notification');
-            } else {
-                $pledgStatus = $params['status'] ?? '';
-                $transactionId = $params['id'] ?? '';
-                $this->logger->info('Payment status received with back mode : ' . $pledgStatus);
-                if (in_array($pledgStatus, self::STATUS_COMPLETED)) {
-                    $this->logger->info('Invoice order after receiving back notification');
-                    $this->invoiceOrder($order, $transactionId);
-                    $message = __('Received invoicing order from Pledg back notification with status %1', $pledgStatus);
-                } elseif (in_array($pledgStatus, self::STATUS_CANCELLED)) {
-                    $this->logger->info('Cancel order after receiving back notification');
-                    if (!$order->canCancel()) {
-                        throw new \Exception(sprintf('Order %s cannot be canceled', $orderIncrementId));
-                    }
-                    $order->registerCancellation(__(
-                        'Received cancellation order from Pledg back notification with status %1',
-                        $pledgStatus
-                    ))->save();
-                } elseif (in_array($pledgStatus, self::STATUS_PENDING)) {
-                    $this->logger->info('Received back notification with Pending status. Do nothing');
-                    $message = __('Received Pledg back notification with status %1. Waiting for further instructions to update order.', $pledgStatus);
-                } else {
-                    $this->logger->error('Received unhandled status from Pledg back notification', ['status' => $pledgStatus]);
-                }
-            }
-
-            $paymentData = $order->getPayment()->getAdditionalInformation();
-            $paymentData['transaction_id'] = $transactionId;
-            $paymentData['pledg_mode'] = $mode;
-            $paymentData['pledg_status'] = $pledgStatus;
-            $order->getPayment()->setAdditionalInformation($paymentData)->save();
-
-            if ($message !== null) {
-                $order->addCommentToStatusHistory($message);
-                $order->save();
+                $this->handleTransferMode($params);
             }
         } catch (\Exception $e) {
             $this->logger->error('An error occurred while processing IPN', [
@@ -228,17 +170,23 @@ class Ipn extends Action
         $response->setHttpResponseCode($responseCode);
         $response->setData(['success' => $success, 'message' => $message]);
 
+        $this->logger->info('IPN response', [
+            'success' => $success,
+            'message' => $message,
+            'responseCode' => $responseCode,
+        ]);
+
         return $response;
     }
 
     /**
      * @param Order  $order
      * @param string $transactionId
+     * @param Phrase $ipnMessage
      *
      * @throws LocalizedException
-     * @throws \Exception
      */
-    private function invoiceOrder(Order $order, string $transactionId): void
+    private function invoiceOrder(Order $order, string $transactionId, Phrase $ipnMessage): void
     {
         if (!$order->canInvoice() || $order->getState() !== Order::STATE_PENDING_PAYMENT) {
             throw new \Exception(sprintf('Order with state %s cannot be processed and invoiced', $order->getState()));
@@ -263,5 +211,127 @@ class Ipn extends Action
         } catch (\Exception $e) {
             $this->logger->error($e->getMessage());
         }
+
+        $this->addMessageOnOrder($order, $ipnMessage);
+    }
+
+    /**
+     * @param array $params
+     *
+     * @throws LocalizedException
+     */
+    private function handleBackMode(array $params): void
+    {
+        $order = $this->getOrder($params);
+
+        $pledgStatus = $params['status'] ?? '';
+        $transactionId = $params['id'] ?? '';
+        $this->logger->info('Payment status received with back mode : ' . $pledgStatus);
+
+        $this->addPaymentInformation($order, $transactionId, self::MODE_BACK, $pledgStatus);
+
+        if (in_array($pledgStatus, self::STATUS_COMPLETED)) {
+            $this->logger->info('Invoice order after receiving back notification');
+            $this->invoiceOrder($order, $transactionId, __(
+                'Received invoicing order from Pledg back notification with status %1',
+                $pledgStatus
+            ));
+
+            return;
+        }
+
+        if (in_array($pledgStatus, self::STATUS_CANCELLED)) {
+            $this->logger->info('Cancel order after receiving back notification');
+            if (!$order->canCancel()) {
+                throw new \Exception(sprintf('Order %s cannot be canceled', $order->getIncrementId()));
+            }
+            $order->registerCancellation(__(
+                'Received cancellation order from Pledg back notification with status %1',
+                $pledgStatus
+            ))->save();
+
+            return;
+        }
+
+        if (in_array($pledgStatus, self::STATUS_PENDING)) {
+            $this->logger->info('Received back notification with Pending status. Do nothing');
+            $this->addMessageOnOrder($order, __(
+                'Received Pledg back notification with status %1. Waiting for further instructions to update order.',
+                $pledgStatus
+            ));
+
+            return;
+        }
+
+        $this->logger->error('Received unhandled status from Pledg back notification', ['status' => $pledgStatus]);
+    }
+
+    /**
+     * @param array $params
+     *
+     * @throws LocalizedException
+     */
+    private function handleTransferMode(array $params): void
+    {
+        $order = $this->getOrder($params);
+
+        // In tranfer mode, notification is only sent when payment is validated
+        $transactionId = $params['purchase_uid'] ?? '';
+        $this->logger->info('Invoice order after receiving transfer notification');
+
+        $this->addPaymentInformation($order, $transactionId, self::MODE_TRANSFER, 'completed');
+        $this->invoiceOrder($order, $transactionId, __('Received invoicing order from Pledg transfer notification'));
+    }
+
+    /**
+     * @param Order  $order
+     * @param string $transactionId
+     * @param string $mode
+     * @param string $pledgStatus
+     */
+    private function addPaymentInformation(Order $order, string $transactionId, string $mode, string $pledgStatus): void
+    {
+        $paymentData = $order->getPayment()->getAdditionalInformation();
+        $paymentData['transaction_id'] = $transactionId;
+        $paymentData['pledg_mode'] = $mode;
+        $paymentData['pledg_status'] = $pledgStatus;
+        $order->getPayment()->setAdditionalInformation($paymentData)->save();
+    }
+
+    /**
+     * @param Order  $order
+     * @param string $message
+     *
+     * @throws \Exception
+     */
+    private function addMessageOnOrder(Order $order, string $message): void
+    {
+        $order->addCommentToStatusHistory($message);
+        $order->save();
+    }
+
+    /**
+     * @param array $params
+     *
+     * @return Order
+     *
+     * @throws \Exception
+     */
+    private function getOrder(array $params): Order
+    {
+        $orderIncrementId = str_replace(Config::ORDER_REFERENCE_PREFIX, '', $params['reference']);
+        $order = $this->orderFactory->create();
+        $order->loadByIncrementId($orderIncrementId);
+
+        if (!$order->getId()) {
+            throw new \Exception(sprintf('Could not retrieve order with id %s', $orderIncrementId));
+        }
+
+        $paymentMethod = $order->getPayment()->getMethod();
+        if (!in_array($paymentMethod, ConfigProvider::getPaymentMethodCodes())) {
+            throw new \Exception(sprintf('Order with method %s should not be updated via Pledg notification', $paymentMethod));
+        }
+
+        return $order;
     }
 }
