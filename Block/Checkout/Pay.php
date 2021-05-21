@@ -2,9 +2,11 @@
 
 namespace Pledg\PledgPaymentGateway\Block\Checkout;
 
+use Magento\Customer\Model\ResourceModel\CustomerRepository;
 use Magento\Framework\View\Element\Template;
 use Magento\Sales\Api\Data\OrderAddressInterface;
 use Magento\Sales\Model\Order;
+use Magento\Sales\Model\ResourceModel\Order\CollectionFactory;
 use Magento\Store\Model\ScopeInterface;
 use Pledg\PledgPaymentGateway\Helper\Config;
 use Pledg\PledgPaymentGateway\Helper\Crypto;
@@ -22,26 +24,42 @@ class Pay extends Template
     private $crypto;
 
     /**
+     * @var CollectionFactory
+     */
+    private $orderCollectionFactory;
+
+    /**
+     * @var CustomerRepository
+     */
+    private $customerRepository;
+
+    /**
      * @var Order
      */
     private $order;
 
     /**
-     * @param Template\Context $context
-     * @param Config           $configHelper
-     * @param Crypto           $crypto
-     * @param array            $data
+     * @param Template\Context   $context
+     * @param Config             $configHelper
+     * @param Crypto             $crypto
+     * @param CollectionFactory  $orderCollectionFactory
+     * @param CustomerRepository $customerRepository
+     * @param array              $data
      */
     public function __construct(
         Template\Context $context,
         Config $configHelper,
         Crypto $crypto,
+        CollectionFactory $orderCollectionFactory,
+        CustomerRepository $customerRepository,
         array $data = []
     ) {
         parent::__construct($context, $data);
 
         $this->configHelper = $configHelper;
         $this->crypto = $crypto;
+        $this->orderCollectionFactory = $orderCollectionFactory;
+        $this->customerRepository = $customerRepository;
     }
 
     /**
@@ -78,6 +96,13 @@ class Pay extends Template
         if (!$order->getIsVirtual()) {
             $pledgData['shipping_address'] = $this->getAddressData($order->getShippingAddress());
         }
+
+        $telephone = $orderAddress->getTelephone();
+        if (!empty($telephone)) {
+            $pledgData['phoneNumber'] = preg_replace('/^(\+|00)(.*)$/', '$2', $telephone);
+        }
+
+        $pledgData = array_merge($pledgData, $this->getCustomerData($order));
 
         $secretKey = $order->getPayment()->getMethodInstance()->getConfigData('secret_key', $order->getStoreId());
         if (empty($secretKey)) {
@@ -136,11 +161,20 @@ class Pay extends Template
      */
     private function getMetaData(Order $order): array
     {
+        $physicalProductTypes = [
+            'simple',
+            'configurable',
+            'bundle',
+            'grouped',
+        ];
+
         $products = [];
         /** @var Order\Item $item */
         foreach ($order->getAllVisibleItems() as $item) {
+            $productType = $item->getProductType();
             $products[] = [
                 'reference' => $item->getSku(),
+                'type' => in_array($productType, $physicalProductTypes) ? 'physical' : 'virtual',
                 'quantity' => (int)$item->getQtyOrdered(),
                 'name' => $item->getName(),
                 'unit_amount_cents' => round($item->getPriceInclTax() * 100),
@@ -160,6 +194,35 @@ class Pay extends Template
             ),
             'products' => $products,
         ];
+    }
+
+    /**
+     * @param Order $order
+     *
+     * @return array
+     */
+    private function getCustomerData(Order $order): array
+    {
+        $customerId = (int)$order->getCustomerId();
+        if (empty($customerId)) {
+            return [];
+        }
+
+        try {
+            $customer = $this->customerRepository->getById($customerId);
+
+            return ['account' => [
+                'creation_date' => (new \DateTime($customer->getCreatedAt()))->format('Y-m-d'),
+                'number_of_purchases' => (int)$this->orderCollectionFactory->create($customerId)->getSize(),
+            ]];
+        } catch (\Exception $e) {
+            $this->_logger->error('Could not resolve order customer for pledg data', [
+                'exception' => $e,
+                'order' => $order->getIncrementId(),
+            ]);
+        }
+
+        return [];
     }
 
     /**
