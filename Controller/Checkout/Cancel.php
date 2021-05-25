@@ -1,34 +1,68 @@
 <?php
 
-/**
- * Copyright © 2016 Magento. All rights reserved.
- * See COPYING.txt for license details.
- *
- * @author Gildas Rossignon <gildas@ginidev.com>
- * @package Pledg_PledgPaymentGateway
- */
-
 namespace Pledg\PledgPaymentGateway\Controller\Checkout;
 
-/**
- * @package Pledg\PledgPaymentGateway\Controller\Checkout
- */
-class Cancel extends AbstractAction {
+use Magento\Checkout\Model\Session;
+use Magento\Framework\App\Action\Context;
+use Magento\Sales\Model\Order;
+use Magento\Sales\Model\OrderFactory;
+use Psr\Log\LoggerInterface;
+
+class Cancel extends CheckoutAction
+{
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
 
     /**
-     * Execute Cancel action
+     * @param Context         $context
+     * @param Session         $checkoutSession
+     * @param OrderFactory    $orderFactory
+     * @param LoggerInterface $logger
      */
-    public function execute() {
-        $orderId = $this->getRequest()->get('orderId');
-        $order =  $this->getOrderById($orderId);
+    public function __construct(
+        Context $context,
+        Session $checkoutSession,
+        OrderFactory $orderFactory,
+        LoggerInterface $logger
+    ) {
+        parent::__construct($context, $checkoutSession, $orderFactory);
 
-        if ($order && $order->getId()) {
-            $this->getLogger()->debug('Requested order cancellation by customer. OrderId: ' . $order->getIncrementId());
-            $this->getCheckoutHelper()->cancelCurrentOrder("Pledg: ".($order->getId())." was cancelled by the customer.");
-            $this->getCheckoutHelper()->restoreQuote(); //restore cart
-            $this->getMessageManager()->addWarningMessage(__("Votre paiement Pledg a bien été annulé. Merci de 'Mettre à jour le panier'."));
-        }
-        $this->_redirect('checkout/cart');
+        $this->logger = $logger;
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function execute()
+    {
+        try {
+            $order = $this->getLastOrder([Order::STATE_NEW, Order::STATE_PENDING_PAYMENT]);
+
+            $comment = __('Payment has been cancelled by customer');
+            $errorMessage = $this->_request->getParam('pledg_error');
+            if (!empty($errorMessage)) {
+                $comment = __($errorMessage);
+            }
+            $order->registerCancellation($comment)->save();
+            $this->getCheckoutSession()->restoreQuote();
+
+            if (!empty($errorMessage)) {
+                $this->messageManager->addErrorMessage(__('An error occurred while processing your payment.'));
+            } else {
+                $this->messageManager->addSuccessMessage(__('Your payment has successfully been cancelled.'));
+            }
+        } catch (\Exception $e) {
+            $this->logger->error('An error occurred on pledg cancel page', [
+                'exception' => $e,
+            ]);
+
+            $this->messageManager->addErrorMessage(
+                __('An error occurred while cancelling your order. Please try again.')
+            );
+        }
+
+        return $this->resultRedirectFactory->create()->setPath('checkout/cart');
+    }
 }

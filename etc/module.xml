@@ -1,13 +1,4 @@
 <?xml version="1.0"?>
-<!--
-/**
- * Copyright © 2016 Magento. All rights reserved.
- * See COPYING.txt for license details.
- *
- * @author Gildas Rossignon <gildas@ginidev.com>
- * @package Pledg_PledgPaymentGateway
- */
--->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
     <module name="Pledg_PledgPaymentGateway" setup_version="3.0.2">
         <sequence>

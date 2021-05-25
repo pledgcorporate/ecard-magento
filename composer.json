@@ -2,7 +2,8 @@
     "name": "pledg/module-pledg-payment-gateway",
     "description": "Pledg Payment Gateway",
     "require": {
-        "php": "~7.1.3||~7.2.0||~7.3.0||~7.4"
+        "php": "~7.1.3||~7.2.0||~7.3.0||~7.4",
+        "firebase/php-jwt": "^5.2"
     },
     "type": "magento2-module",
     "version": "1.0.3",

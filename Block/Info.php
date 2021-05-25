@@ -1,29 +1,40 @@
 <?php
-/**
- * Copyright © 2016 Magento. All rights reserved.
- * See COPYING.txt for license details.
- *
- * @author Gildas Rossignon <gildas@ginidev.com>
- * @package Pledg_PledgPaymentGateway
- */
+
 namespace Pledg\PledgPaymentGateway\Block;
 
-use Magento\Framework\Phrase;
-use Magento\Payment\Block\ConfigurableInfo;
+use Magento\Payment\Block\Info as BaseInfo;
+use Pledg\PledgPaymentGateway\Controller\Checkout\Ipn;
 
 /**
  * Class Info
  */
-class Info extends ConfigurableInfo
+class Info extends BaseInfo
 {
     /**
-     * Returns label
-     *
-     * @param string $field
-     * @return Phrase
+     * @var string
      */
-    protected function getLabel($field)
+    protected $_template = 'Pledg_PledgPaymentGateway::info/default.phtml';
+
+    /**
+     * @return array
+     */
+    public function getAdminSpecificInformation(): array
     {
-        return __($field);
+        $orderPaymentInfo = $this->getInfo()->getOrder()->getPayment()->getAdditionalInformation();
+
+        $unknownLabel = __('Unknown');
+        $modeLabel = $unknownLabel;
+        $mode = $orderPaymentInfo['pledg_mode'] ?? '';
+        if ($mode === Ipn::MODE_TRANSFER) {
+            $modeLabel = __('Mode Transfer');
+        } elseif ($mode === Ipn::MODE_BACK) {
+            $modeLabel = __('Mode Back');
+        }
+
+        return [
+            __('Transaction ID')->getText() => $orderPaymentInfo['transaction_id'] ?? $unknownLabel,
+            __('Pledg Mode')->getText() => $modeLabel,
+            __('Pledg Status')->getText() => $orderPaymentInfo['pledg_status'] ?? $unknownLabel,
+        ];
     }
 }

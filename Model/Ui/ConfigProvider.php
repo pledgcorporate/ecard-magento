@@ -1,13 +1,9 @@
 <?php
-/**
- * Copyright © 2016 Magento. All rights reserved.
- * See COPYING.txt for license details.
- *
- * @author Gildas Rossignon <gildas@ginidev.com>
- * @package Pledg_PledgPaymentGateway
- */
+
 namespace Pledg\PledgPaymentGateway\Model\Ui;
 
+use Magento\Framework\App\RequestInterface;
+use Magento\Framework\UrlInterface;
 use Pledg\PledgPaymentGateway\Gateway\Config\Config1;
 use Pledg\PledgPaymentGateway\Gateway\Config\Config2;
 use Pledg\PledgPaymentGateway\Gateway\Config\Config3;
@@ -19,146 +15,109 @@ use Pledg\PledgPaymentGateway\Gateway\Config\Config8;
 use Pledg\PledgPaymentGateway\Gateway\Config\Config9;
 use Pledg\PledgPaymentGateway\Gateway\Config\Config10;
 use Magento\Checkout\Model\ConfigProviderInterface;
-use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Customer\Model\Session;
-use Magento\Backend\Model\Session\Quote;
-use Magento\Framework\App\Helper\Context;
 use Magento\Framework\View\Asset\Repository;
-use Pledg\PledgPaymentGateway\Gateway\Config\Config;
+use Magento\Payment\Helper\Data as PaymentHelper;
+use Magento\Store\Model\StoreManagerInterface;
 
 /**
  * Class ConfigProvider
  */
 final class ConfigProvider implements ConfigProviderInterface
 {
-    protected $_gatewayConfig;
-    protected $_scopeConfigInterface;
-    protected $customerSession;
-    protected $_urlBuilder;
-    protected $request;
-    protected $_assetRepo;
+    const LOGO_DIR_UPLOAD = 'sales/pledg/logo';
 
+    /**
+     * @var Repository
+     */
+    private $assetRepo;
+
+    /**
+     * @var PaymentHelper
+     */
+    private $paymentHelper;
+
+    /**
+     * @var RequestInterface
+     */
+    private $request;
+
+    /**
+     * @var StoreManagerInterface
+     */
+    private $storeManager;
+
+    /**
+     * @param Repository            $assetRepo
+     * @param PaymentHelper         $paymentHelper
+     * @param RequestInterface      $request
+     * @param StoreManagerInterface $storeManager
+     */
     public function __construct(
-    Config $gatewayConfig,
-    Session $customerSession,
-    Quote $sessionQuote,
-    Context $context,
-    Repository $assetRepo
-    )
-    {
-        $this->_gatewayConfig = $gatewayConfig;
-        $this->_scopeConfigInterface = $context->getScopeConfig();
-        $this->customerSession = $customerSession;
-        $this->sessionQuote = $sessionQuote;
-        $this->_urlBuilder = $context->getUrlBuilder();
-        $this->_assetRepo = $assetRepo;
+        Repository $assetRepo,
+        PaymentHelper $paymentHelper,
+        RequestInterface $request,
+        StoreManagerInterface $storeManager
+    ) {
+        $this->assetRepo = $assetRepo;
+        $this->paymentHelper = $paymentHelper;
+        $this->request = $request;
+        $this->storeManager = $storeManager;
     }
 
-    public function getConfig()
+    /**
+     * @return array
+     */
+    public function getConfig(): array
     {
+        $defaultLogoUrl = $this->assetRepo->getUrlWithParams('Pledg_PledgPaymentGateway::images/pledg_logo.png', [
+            '_secure' => $this->request->isSecure(),
+        ]);
+        $mediaBaseUrl = $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA, $this->request->isSecure())  . self::LOGO_DIR_UPLOAD . '/';
 
-        // Logo defaut
+        $availableMethods = [];
+        foreach ($this->getPaymentMethodCodes() as $methodCode) {
+            $method = $this->paymentHelper->getMethodInstance($methodCode);
+            if (!$method->isAvailable()) {
+                continue;
+            }
 
-        /** @var $om \Magento\Framework\ObjectManagerInterface */
-        $om = \Magento\Framework\App\ObjectManager::getInstance();
-        /** @var $request \Magento\Framework\App\RequestInterface */
-        $request = $om->get('Magento\Framework\App\RequestInterface');
-        $params = array();
-        $params = array_merge(['_secure' => $request->isSecure()], $params);
+            $methodLogo = $defaultLogoUrl;
+            if (strlen($method->getConfigData('gateway_logo')) > 0) {
+                $methodLogo = $mediaBaseUrl . $method->getConfigData('gateway_logo');
+            }
 
-        $logoDef = $this->_assetRepo->getUrlWithParams('Pledg_PledgPaymentGateway::images/pledg_logo.png', $params);
-
-
-        $logoFile = $this->_gatewayConfig->getLogo();
-        if(strlen($logoFile) > 0){
-            $logo = '../pub/media/sales/store/logo/' . $logoFile;
+            $availableMethods[$methodCode] = [
+                'title'        => $method->getConfigData('title'),
+                'description'  => $method->getConfigData('description'),
+                'logo'         => $methodLogo,
+            ];
         }
-        else{
-            $logo = $logoDef;
+
+        if (count($availableMethods) === 0) {
+            return [];
         }
 
-        $config = [
-            'payment' => [
-                Config::CODE => [
-                    'title' => $this->_gatewayConfig->getTitle(),
-                    'description' => $this->_gatewayConfig->getDescription(),
-                    'logo' => $logo,
-                    'staging' => $this->_scopeConfigInterface->getValue('payment/' . Config::CODE . '/staging'),
-                    //'allowed_countries' => $this->_gatewayConfig->getSpecificCountry(),
-                ],
-                Config1::CODE => [
-                    'title' => $this->_scopeConfigInterface->getValue('payment/' . Config1::CODE . '/title'),
-                    'description' => $this->_scopeConfigInterface->getValue('payment/' . Config1::CODE . '/description'),
-                    'logo' => strlen($this->_scopeConfigInterface->getValue('payment/' . Config1::CODE . '/gateway_logo')) > 0 ? '../pub/media/sales/store/logo/' . $this->_scopeConfigInterface->getValue('payment/' . Config1::CODE . '/gateway_logo') : $logoDef,
-                    'merchant_uid' => $this->_scopeConfigInterface->getValue('payment/' . Config1::CODE . '/api_key'),
-                    //'allowed_countries' => $this->_gatewayConfig->getSpecificCountry(),
-                ],
-                Config2::CODE => [
-                    'title' => $this->_scopeConfigInterface->getValue('payment/' . Config2::CODE . '/title'),
-                    'description' => $this->_scopeConfigInterface->getValue('payment/' . Config2::CODE . '/description'),
-                    'logo' => strlen($this->_scopeConfigInterface->getValue('payment/' . Config2::CODE . '/gateway_logo')) > 0 ? '../pub/media/sales/store/logo/' . $this->_scopeConfigInterface->getValue('payment/' . Config2::CODE . '/gateway_logo') : $logoDef,
-                    'merchant_uid' => $this->_scopeConfigInterface->getValue('payment/' . Config2::CODE . '/api_key'),
-                    //'allowed_countries' => $this->_gatewayConfig->getSpecificCountry(),
-                ],
-                Config3::CODE => [
-                    'title' => $this->_scopeConfigInterface->getValue('payment/' . Config3::CODE . '/title'),
-                    'description' => $this->_scopeConfigInterface->getValue('payment/' . Config3::CODE . '/description'),
-                    'logo' => strlen($this->_scopeConfigInterface->getValue('payment/' . Config3::CODE . '/gateway_logo')) > 0 ? '../pub/media/sales/store/logo/' . $this->_scopeConfigInterface->getValue('payment/' . Config3::CODE . '/gateway_logo') : $logoDef,
-                    'merchant_uid' => $this->_scopeConfigInterface->getValue('payment/' . Config3::CODE . '/api_key'),
-                    //'allowed_countries' => $this->_gatewayConfig->getSpecificCountry(),
-                ],
-                Config4::CODE => [
-                    'title' => $this->_scopeConfigInterface->getValue('payment/' . Config4::CODE . '/title'),
-                    'description' => $this->_scopeConfigInterface->getValue('payment/' . Config4::CODE . '/description'),
-                    'logo' => strlen($this->_scopeConfigInterface->getValue('payment/' . Config4::CODE . '/gateway_logo')) > 0 ? '../pub/media/sales/store/logo/' . $this->_scopeConfigInterface->getValue('payment/' . Config4::CODE . '/gateway_logo') : $logoDef,
-                    'merchant_uid' => $this->_scopeConfigInterface->getValue('payment/' . Config4::CODE . '/api_key'),
-                    //'allowed_countries' => $this->_gatewayConfig->getSpecificCountry(),
-                ],
-                Config5::CODE => [
-                    'title' => $this->_scopeConfigInterface->getValue('payment/' . Config5::CODE . '/title'),
-                    'description' => $this->_scopeConfigInterface->getValue('payment/' . Config5::CODE . '/description'),
-                    'logo' => strlen($this->_scopeConfigInterface->getValue('payment/' . Config5::CODE . '/gateway_logo')) > 0 ? '../pub/media/sales/store/logo/' . $this->_scopeConfigInterface->getValue('payment/' . Config5::CODE . '/gateway_logo') : $logoDef,
-                    'merchant_uid' => $this->_scopeConfigInterface->getValue('payment/' . Config5::CODE . '/api_key'),
-                    //'allowed_countries' => $this->_gatewayConfig->getSpecificCountry(),
-                ],
-                Config6::CODE => [
-                    'title' => $this->_scopeConfigInterface->getValue('payment/' . Config6::CODE . '/title'),
-                    'description' => $this->_scopeConfigInterface->getValue('payment/' . Config6::CODE . '/description'),
-                    'logo' => strlen($this->_scopeConfigInterface->getValue('payment/' . Config6::CODE . '/gateway_logo')) > 0 ? '../pub/media/sales/store/logo/' . $this->_scopeConfigInterface->getValue('payment/' . Config6::CODE . '/gateway_logo') : $logoDef,
-                    'merchant_uid' => $this->_scopeConfigInterface->getValue('payment/' . Config6::CODE . '/api_key'),
-                    //'allowed_countries' => $this->_gatewayConfig->getSpecificCountry(),
-                ],
-                Config7::CODE => [
-                    'title' => $this->_scopeConfigInterface->getValue('payment/' . Config7::CODE . '/title'),
-                    'description' => $this->_scopeConfigInterface->getValue('payment/' . Config7::CODE . '/description'),
-                    'logo' => strlen($this->_scopeConfigInterface->getValue('payment/' . Config7::CODE . '/gateway_logo')) > 0 ? '../pub/media/sales/store/logo/' . $this->_scopeConfigInterface->getValue('payment/' . Config7::CODE . '/gateway_logo') : $logoDef,
-                    'merchant_uid' => $this->_scopeConfigInterface->getValue('payment/' . Config7::CODE . '/api_key'),
-                    //'allowed_countries' => $this->_gatewayConfig->getSpecificCountry(),
-                ],
-                Config8::CODE => [
-                    'title' => $this->_scopeConfigInterface->getValue('payment/' . Config8::CODE . '/title'),
-                    'description' => $this->_scopeConfigInterface->getValue('payment/' . Config8::CODE . '/description'),
-                    'logo' => strlen($this->_scopeConfigInterface->getValue('payment/' . Config8::CODE . '/gateway_logo')) > 0 ? '../pub/media/sales/store/logo/' . $this->_scopeConfigInterface->getValue('payment/' . Config8::CODE . '/gateway_logo') : $logoDef,
-                    'merchant_uid' => $this->_scopeConfigInterface->getValue('payment/' . Config8::CODE . '/api_key'),
-                    //'allowed_countries' => $this->_gatewayConfig->getSpecificCountry(),
-                ],
-                Config9::CODE => [
-                    'title' => $this->_scopeConfigInterface->getValue('payment/' . Config9::CODE . '/title'),
-                    'description' => $this->_scopeConfigInterface->getValue('payment/' . Config9::CODE . '/description'),
-                    'logo' => strlen($this->_scopeConfigInterface->getValue('payment/' . Config9::CODE . '/gateway_logo')) > 0 ? '../pub/media/sales/store/logo/' . $this->_scopeConfigInterface->getValue('payment/' . Config9::CODE . '/gateway_logo') : $logoDef,
-                    'merchant_uid' => $this->_scopeConfigInterface->getValue('payment/' . Config9::CODE . '/api_key'),
-                    //'allowed_countries' => $this->_gatewayConfig->getSpecificCountry(),
-                ],
-                Config10::CODE => [
-                    'title' => $this->_scopeConfigInterface->getValue('payment/' . Config10::CODE . '/title'),
-                    'description' => $this->_scopeConfigInterface->getValue('payment/' . Config10::CODE . '/description'),
-                    'logo' => strlen($this->_scopeConfigInterface->getValue('payment/' . Config10::CODE . '/gateway_logo')) > 0 ? '../pub/media/sales/store/logo/' . $this->_scopeConfigInterface->getValue('payment/' . Config3::CODE . '/gateway_logo') : $logoDef,
-                    'merchant_uid' => $this->_scopeConfigInterface->getValue('payment/' . Config10::CODE . '/api_key'),
-                    //'allowed_countries' => $this->_gatewayConfig->getSpecificCountry(),
-                ]
-            ]
+        return [
+            'payment' => $availableMethods,
         ];
+    }
 
-        return $config;
+    /**
+     * @return array
+     */
+    public static function getPaymentMethodCodes(): array
+    {
+        return [
+            Config1::CODE,
+            Config2::CODE,
+            Config3::CODE,
+            Config4::CODE,
+            Config5::CODE,
+            Config6::CODE,
+            Config7::CODE,
+            Config8::CODE,
+            Config9::CODE,
+            Config10::CODE,
+        ];
     }
 }
