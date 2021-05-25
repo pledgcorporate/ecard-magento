@@ -102,8 +102,6 @@ class Pay extends Template
             $pledgData['phoneNumber'] = preg_replace('/^(\+|00)(.*)$/', '$2', $telephone);
         }
 
-        $pledgData = array_merge($pledgData, $this->getCustomerData($order));
-
         $secretKey = $order->getPayment()->getMethodInstance()->getConfigData('secret_key', $order->getStoreId());
         if (empty($secretKey)) {
             return $this->encodeData($pledgData);
@@ -186,14 +184,14 @@ class Pay extends Template
             }
         }
 
-        return [
+        return array_merge([
             'plugin' => sprintf(
                 'magento%s-pledg-plugin%s',
                 $this->configHelper->getMagentoVersion(),
                 $this->configHelper->getModuleVersion()
             ),
             'products' => $products,
-        ];
+        ], $this->getCustomerData($order));
     }
 
     /**
